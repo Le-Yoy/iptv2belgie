@@ -51,3 +51,14 @@ export interface CarouselSlide {
     name: string;
   }>;
 }
+
+export interface SubscriptionPlan {
+  id: string;
+  name: string;
+  price: number;
+  originalPrice?: number;
+  duration: string;
+  features: string[];
+  popular?: boolean;
+  badge?: string;
+}
