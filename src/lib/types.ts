@@ -91,3 +91,10 @@ export interface BrandLogo {
   icon: string;
   path: string;
 }
+
+export interface BrandLogo {
+  name: string;
+  icon: string;
+  path: string;
+}
+export interface BrandLogo { name: string; icon: string; path: string; }
