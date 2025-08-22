@@ -81,4 +81,13 @@ export interface ApiResponse<T> {
  success: boolean;
  data?: T;
  error?: string;
+}export interface BrandLogo {
+  name: string;
+  icon: string;
+  path: string;
+}
+export interface BrandLogo {
+  name: string;
+  icon: string;
+  path: string;
 }
