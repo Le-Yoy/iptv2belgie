@@ -39,3 +39,16 @@ export interface EmailCaptureData {
   timestamp: string;
   source: EmailCaptureSource;
 }
+
+export interface CarouselSlide {
+  id: string;
+  background: string;
+  content: {
+    [key in Language]: {
+      headline: string;
+      subheadline: string;
+      description: string;
+      cta: string;
+    };
+  };
+}
