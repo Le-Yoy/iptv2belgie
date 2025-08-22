@@ -41,14 +41,13 @@ export interface EmailCaptureData {
 }
 
 export interface CarouselSlide {
-  id: string;
-  background: string;
-  content: {
-    [key in Language]: {
-      headline: string;
-      subheadline: string;
-      description: string;
-      cta: string;
-    };
-  };
+  id: string | number;
+  title: string;
+  subtitle: string;
+  badge: string;
+  duration: number;
+  channels: Array<{
+    icon: string;
+    name: string;
+  }>;
 }
