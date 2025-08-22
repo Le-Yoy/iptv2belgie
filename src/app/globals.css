@@ -1,0 +1,325 @@
+/* src/app/globals.css - IPTV2Belgie Variant */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Sky-Tech Color Scheme - Completely Different from French Version */
+  --primary-black: #0a0e1a;
+  --primary-blue: #0EA5E9;
+  --accent-green: #10B981;
+  --accent-purple: #8B5CF6;
+
+  /* New Gradients */
+  --gradient-premium: linear-gradient(135deg, #0EA5E9 0%, #10B981 100%);
+  --gradient-dutch: linear-gradient(
+    90deg,
+    #0a0e1a 0%,
+    #0EA5E9 50%,
+    #10B981 100%
+  );
+  --gradient-cta: linear-gradient(135deg, #0EA5E9 0%, #06B6D4 100%);
+  --gradient-dark: linear-gradient(
+    180deg,
+    rgba(10, 14, 26, 0.95) 0%,
+    rgba(10, 14, 26, 0.7) 100%
+  );
+
+  /* UI Colors */
+  --bg-primary: #0a0e1a;
+  --bg-secondary: #111827;
+  --bg-card: rgba(14, 165, 233, 0.05);
+  --bg-glass: rgba(16, 185, 129, 0.05);
+  --text-primary: #ffffff;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --border-subtle: rgba(14, 165, 233, 0.15);
+  --border-accent: rgba(16, 185, 129, 0.15);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar Styling - Different from French */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #0EA5E9, #10B981);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #0284C7, #059669);
+}
+
+/* Glass Morphism - Different style */
+.glass {
+  background: rgba(14, 165, 233, 0.03);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(14, 165, 233, 0.1);
+  border-radius: 16px;
+}
+
+.glass-dark {
+  background: rgba(10, 14, 26, 0.8);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(14, 165, 233, 0.1);
+  border-radius: 16px;
+}
+
+/* Premium Button - Completely different */
+.btn-premium {
+  background: linear-gradient(135deg, #0EA5E9 0%, #10B981 100%);
+  color: white;
+  font-weight: 600;
+  padding: 14px 28px;
+  border-radius: 14px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  font-size: 16px;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 20px rgba(14, 165, 233, 0.25);
+  text-transform: none;
+}
+
+.btn-premium:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 35px rgba(14, 165, 233, 0.4);
+}
+
+.btn-premium::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn-premium:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Text Shadow - Softer */
+.hero-text-shadow {
+  text-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.5),
+    0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Smooth Scroll */
+.scroll-smooth-touch {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.scroll-smooth-touch::-webkit-scrollbar {
+  display: none;
+}
+
+/* Card Hover Effects - Different animation */
+.card-hover {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card-hover:hover {
+  transform: translateY(-12px) scale(1.03) rotateX(5deg);
+  box-shadow: 0 25px 50px rgba(14, 165, 233, 0.3);
+}
+
+/* Dutch Accent Border */
+.dutch-accent {
+  position: relative;
+}
+
+.dutch-accent::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #0EA5E9 25%,
+    #10B981 75%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.dutch-accent:hover::after {
+  opacity: 1;
+}
+
+/* Gradient Text - Different colors */
+.gradient-text {
+  background: linear-gradient(135deg, #0EA5E9 0%, #10B981 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Loading Animation - Different */
+@keyframes pulse-blue {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(0.95);
+  }
+}
+
+.animate-pulse-blue {
+  animation: pulse-blue 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Mobile Touch Targets */
+@media (max-width: 768px) {
+  .touch-target {
+    min-height: 48px;
+    min-width: 48px;
+  }
+
+  .btn-premium {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+}
+
+/* New Animations */
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes bounceIn {
+  from {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-slideInFromRight {
+  animation: slideInFromRight 0.6s ease-out;
+}
+
+.animate-bounceIn {
+  animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Device Toggle - Different style */
+.device-toggle {
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(16, 185, 129, 0.1));
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 6px;
+  display: inline-flex;
+  gap: 6px;
+}
+
+.device-toggle button {
+  padding: 10px 20px;
+  border-radius: 12px;
+  transition: all 0.4s;
+  font-weight: 500;
+  min-width: 110px;
+}
+
+.device-toggle button.active {
+  background: linear-gradient(135deg, #0EA5E9, #10B981);
+  color: white;
+  transform: scale(1.05);
+}
+
+.device-toggle button:not(.active) {
+  color: var(--text-secondary);
+  background: transparent;
+}
+
+.device-toggle button:not(.active):hover {
+  background: rgba(14, 165, 233, 0.1);
+}
+
+/* Hide scrollbar */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Glow effects */
+.glow-blue {
+  box-shadow: 0 0 40px rgba(14, 165, 233, 0.5);
+}
+
+.glow-green {
+  box-shadow: 0 0 40px rgba(16, 185, 129, 0.5);
+}
+
+/* Text animations */
+@keyframes textGlow {
+  0%, 100% {
+    text-shadow: 0 0 10px rgba(14, 165, 233, 0.5);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(14, 165, 233, 0.8),
+                 0 0 30px rgba(16, 185, 129, 0.6);
+  }
+}
+
+.text-glow {
+  animation: textGlow 3s ease-in-out infinite;
+}
