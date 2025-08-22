@@ -7,7 +7,7 @@ import type { CarouselSlide } from '@/lib/types';
 
 const slides: CarouselSlide[] = [
   {
-    id: 1,
+    id: "1",
     title: 'Every Match. Every League. In 4K.',
     subtitle:
       'Premier League, Champions League, Bundesliga, Ligue 1, and 500+ sports channels. Never miss a goal with our ultra-HD streaming quality.',
@@ -23,7 +23,7 @@ const slides: CarouselSlide[] = [
     ],
   },
   {
-    id: 2,
+    id: "2",
     title: 'Netflix, Disney+, HBO & More. One Price.',
     subtitle:
       'Access all premium streaming services with one subscription. Latest movies, exclusive series, and thousands of on-demand titles.',
@@ -39,7 +39,7 @@ const slides: CarouselSlide[] = [
     ],
   },
   {
-    id: 3,
+    id: "3",
     title: 'Safe Content for Every Family Member',
     subtitle:
       'Kids channels, educational content, family movies, and parental controls. Entertainment the whole family can enjoy together.',
