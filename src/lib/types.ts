@@ -98,3 +98,4 @@ export interface BrandLogo {
   path: string;
 }
 export interface BrandLogo { name: string; icon: string; path: string; }
+export type EmailCaptureSource = "hero" | "modal" | "pricing" | "email_capture" | "exit_intent";
