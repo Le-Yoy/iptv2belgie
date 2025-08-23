@@ -10,35 +10,45 @@ interface PricingProps {
   onEmailCapture?: (email: string) => void;
 }
 
-const pricingData = {
+interface PricingPlan {
+  id: string;
+  duration: { 'nl-BE': string; 'fr-BE': string; en: string };
+  price: number;
+  monthly: number;
+  badge: { 'nl-BE': string; 'fr-BE': string; en: string } | null;
+  savings: string | null;
+  popular: boolean;
+}
+
+const pricingData: Record<string, PricingPlan[]> = {
   '1-device': [
     {
       id: '12month-1d',
       duration: { 'nl-BE': '12 Maanden', 'fr-BE': '12 Mois', en: '12 Months' },
-      price: 79,
-      monthly: 6.58,
+      price: 69,
+      monthly: 5.75,
       badge: {
         'nl-BE': 'BESTE WAARDE',
         'fr-BE': 'MEILLEURE VALEUR',
         en: 'BEST VALUE',
       },
-      savings: '60%',
+      savings: '62%',
       popular: true,
     },
     {
-      id: '6month-1d',
-      duration: { 'nl-BE': '6 Maanden', 'fr-BE': '6 Mois', en: '6 Months' },
-      price: 49,
-      monthly: 8.17,
+      id: '3month-1d',
+      duration: { 'nl-BE': '3 Maanden', 'fr-BE': '3 Mois', en: '3 Months' },
+      price: 35,
+      monthly: 11.67,
       badge: { 'nl-BE': 'POPULAIR', 'fr-BE': 'POPULAIRE', en: 'POPULAR' },
-      savings: '50%',
+      savings: '22%',
       popular: false,
     },
     {
       id: '1month-1d',
       duration: { 'nl-BE': '1 Maand', 'fr-BE': '1 Mois', en: '1 Month' },
-      price: 16.5,
-      monthly: 16.5,
+      price: 15,
+      monthly: 15,
       badge: null,
       savings: null,
       popular: false,
@@ -48,36 +58,147 @@ const pricingData = {
     {
       id: '12month-2d',
       duration: { 'nl-BE': '12 Maanden', 'fr-BE': '12 Mois', en: '12 Months' },
-      price: 119,
-      monthly: 9.92,
+      price: 59,
+      monthly: 4.92,
       badge: {
         'nl-BE': 'MAXIMALE BESPARING',
         'fr-BE': 'ÉCONOMIE MAX',
         en: 'MAX SAVINGS',
       },
-      savings: '58%',
+      savings: '67%',
       popular: true,
     },
     {
-      id: '6month-2d',
-      duration: { 'nl-BE': '6 Maanden', 'fr-BE': '6 Mois', en: '6 Months' },
-      price: 79,
-      monthly: 13.17,
+      id: '3month-2d',
+      duration: { 'nl-BE': '3 Maanden', 'fr-BE': '3 Mois', en: '3 Months' },
+      price: 30,
+      monthly: 10,
       badge: {
         'nl-BE': 'MEEST GEKOZEN',
         'fr-BE': 'PLUS CHOISI',
         en: 'MOST CHOSEN',
       },
-      savings: '45%',
+      savings: '33%',
       popular: false,
     },
     {
       id: '1month-2d',
       duration: { 'nl-BE': '1 Maand', 'fr-BE': '1 Mois', en: '1 Month' },
-      price: 24,
-      monthly: 24,
+      price: 12,
+      monthly: 12,
       badge: { 'nl-BE': 'GEZIN', 'fr-BE': 'FAMILLE', en: 'FAMILY' },
-      savings: null,
+      savings: '20%',
+      popular: false,
+    },
+  ],
+  '3-devices': [
+    {
+      id: '12month-3d',
+      duration: { 'nl-BE': '12 Maanden', 'fr-BE': '12 Mois', en: '12 Months' },
+      price: 49,
+      monthly: 4.08,
+      badge: {
+        'nl-BE': 'MAXIMALE BESPARING',
+        'fr-BE': 'ÉCONOMIE MAX',
+        en: 'MAX SAVINGS',
+      },
+      savings: '73%',
+      popular: true,
+    },
+    {
+      id: '3month-3d',
+      duration: { 'nl-BE': '3 Maanden', 'fr-BE': '3 Mois', en: '3 Months' },
+      price: 25,
+      monthly: 8.33,
+      badge: {
+        'nl-BE': 'MEEST GEKOZEN',
+        'fr-BE': 'PLUS CHOISI',
+        en: 'MOST CHOSEN',
+      },
+      savings: '44%',
+      popular: false,
+    },
+    {
+      id: '1month-3d',
+      duration: { 'nl-BE': '1 Maand', 'fr-BE': '1 Mois', en: '1 Month' },
+      price: 10,
+      monthly: 10,
+      badge: null,
+      savings: '33%',
+      popular: false,
+    },
+  ],
+  '4-devices': [
+    {
+      id: '12month-4d',
+      duration: { 'nl-BE': '12 Maanden', 'fr-BE': '12 Mois', en: '12 Months' },
+      price: 39,
+      monthly: 3.25,
+      badge: {
+        'nl-BE': 'MAXIMALE BESPARING',
+        'fr-BE': 'ÉCONOMIE MAX',
+        en: 'MAX SAVINGS',
+      },
+      savings: '78%',
+      popular: true,
+    },
+    {
+      id: '3month-4d',
+      duration: { 'nl-BE': '3 Maanden', 'fr-BE': '3 Mois', en: '3 Months' },
+      price: 20,
+      monthly: 6.67,
+      badge: {
+        'nl-BE': 'MEEST GEKOZEN',
+        'fr-BE': 'PLUS CHOISI',
+        en: 'MOST CHOSEN',
+      },
+      savings: '56%',
+      popular: false,
+    },
+    {
+      id: '1month-4d',
+      duration: { 'nl-BE': '1 Maand', 'fr-BE': '1 Mois', en: '1 Month' },
+      price: 8,
+      monthly: 8,
+      badge: null,
+      savings: '47%',
+      popular: false,
+    },
+  ],
+  '5-devices': [
+    {
+      id: '12month-5d',
+      duration: { 'nl-BE': '12 Maanden', 'fr-BE': '12 Mois', en: '12 Months' },
+      price: 29,
+      monthly: 2.42,
+      badge: {
+        'nl-BE': 'MAXIMALE BESPARING',
+        'fr-BE': 'ÉCONOMIE MAX',
+        en: 'MAX SAVINGS',
+      },
+      savings: '84%',
+      popular: true,
+    },
+    {
+      id: '3month-5d',
+      duration: { 'nl-BE': '3 Maanden', 'fr-BE': '3 Mois', en: '3 Months' },
+      price: 15,
+      monthly: 5,
+      badge: {
+        'nl-BE': 'MEEST GEKOZEN',
+        'fr-BE': 'PLUS CHOISI',
+        en: 'MOST CHOSEN',
+      },
+      savings: '67%',
+      popular: false,
+    },
+    {
+      id: '1month-5d',
+      duration: { 'nl-BE': '1 Maand', 'fr-BE': '1 Mois', en: '1 Month' },
+      price: 6,
+      monthly: 6,
+      badge: null,
+      savings: '60%',
       popular: false,
     },
   ],
@@ -126,16 +247,14 @@ export default function DynamicPricing({
   language,
   onEmailCapture,
 }: PricingProps) {
-  const [deviceType, setDeviceType] = useState<'1-device' | '2-devices'>(
-    '1-device'
-  );
-  const [selectedPlan, setSelectedPlan] = useState<any>(null);
+  const [deviceType, setDeviceType] = useState<string>('1-device');
+  const [selectedPlan, setSelectedPlan] = useState<PricingPlan | null>(null);
   const [showEmailModal, setShowEmailModal] = useState(false);
 
   const currentPlans = pricingData[deviceType];
   const currentFeatures = features[language];
 
-  const handlePlanSelect = (plan: any) => {
+  const handlePlanSelect = (plan: PricingPlan) => {
     setSelectedPlan(plan);
     setShowEmailModal(true);
   };
@@ -174,6 +293,45 @@ export default function DynamicPricing({
 
   const texts = getComparisonText(language);
 
+  const deviceOptions = [
+    {
+      key: '1-device',
+      label: { 'nl-BE': '1 Apparaat', 'fr-BE': '1 Appareil', en: '1 Device' },
+    },
+    {
+      key: '2-devices',
+      label: {
+        'nl-BE': '2 Apparaten',
+        'fr-BE': '2 Appareils',
+        en: '2 Devices',
+      },
+    },
+    {
+      key: '3-devices',
+      label: {
+        'nl-BE': '3 Apparaten',
+        'fr-BE': '3 Appareils',
+        en: '3 Devices',
+      },
+    },
+    {
+      key: '4-devices',
+      label: {
+        'nl-BE': '4 Apparaten',
+        'fr-BE': '4 Appareils',
+        en: '4 Devices',
+      },
+    },
+    {
+      key: '5-devices',
+      label: {
+        'nl-BE': '5 Apparaten',
+        'fr-BE': '5 Appareils',
+        en: '5 Devices',
+      },
+    },
+  ];
+
   return (
     <section
       id="pricing"
@@ -196,36 +354,21 @@ export default function DynamicPricing({
           </h2>
           <p className="text-xl text-gray-400 mb-8">{texts.vs}</p>
 
-          {/* Device Toggle - Updated for 2 devices */}
-          <div className="inline-flex bg-slate-800/50 backdrop-blur-sm rounded-2xl p-2 border border-sky-500/20">
-            <button
-              onClick={() => setDeviceType('1-device')}
-              className={`px-6 py-3 rounded-xl font-medium transition-all duration-300 ${
-                deviceType === '1-device'
-                  ? 'bg-gradient-to-r from-sky-500 to-emerald-500 text-white shadow-lg'
-                  : 'text-gray-400 hover:text-white'
-              }`}
-            >
-              {language === 'nl-BE'
-                ? '1 Apparaat'
-                : language === 'fr-BE'
-                  ? '1 Appareil'
-                  : '1 Device'}
-            </button>
-            <button
-              onClick={() => setDeviceType('2-devices')}
-              className={`px-6 py-3 rounded-xl font-medium transition-all duration-300 ${
-                deviceType === '2-devices'
-                  ? 'bg-gradient-to-r from-sky-500 to-emerald-500 text-white shadow-lg'
-                  : 'text-gray-400 hover:text-white'
-              }`}
-            >
-              {language === 'nl-BE'
-                ? '2 Apparaten'
-                : language === 'fr-BE'
-                  ? '2 Appareils'
-                  : '2 Devices'}
-            </button>
+          {/* Device Toggle - Mobile Optimized */}
+          <div className="flex flex-wrap justify-center gap-2 max-w-4xl mx-auto">
+            {deviceOptions.map((option) => (
+              <button
+                key={option.key}
+                onClick={() => setDeviceType(option.key)}
+                className={`px-4 py-2 sm:px-6 sm:py-3 rounded-xl font-medium transition-all duration-300 text-sm sm:text-base ${
+                  deviceType === option.key
+                    ? 'bg-gradient-to-r from-sky-500 to-emerald-500 text-white shadow-lg'
+                    : 'bg-slate-800/50 text-gray-400 hover:text-white hover:bg-slate-700/50'
+                }`}
+              >
+                {option.label[language]}
+              </button>
+            ))}
           </div>
         </motion.div>
 
