@@ -1,4 +1,4 @@
-// src/components/modals/EmailCaptureModal.tsx
+// src/components/modals/EmailCaptureModal.tsx - Fixed with Auto-Close
 'use client';
 
 import { useState } from 'react';
@@ -67,6 +67,11 @@ export default function EmailCaptureModal({
 
     const whatsappUrl = `https://wa.me/32465123456?text=${encodeURIComponent(messages[language])}`;
     window.open(whatsappUrl, '_blank');
+
+    // Auto-close modal after user contacts support
+    setTimeout(() => {
+      onClose();
+    }, 2000);
   };
 
   const openTelegram = () => {
@@ -78,6 +83,11 @@ export default function EmailCaptureModal({
 
     const telegramUrl = `https://t.me/iptv2belgie_support?text=${encodeURIComponent(messages[language])}`;
     window.open(telegramUrl, '_blank');
+
+    // Auto-close modal after user contacts support
+    setTimeout(() => {
+      onClose();
+    }, 2000);
   };
 
   const content = {

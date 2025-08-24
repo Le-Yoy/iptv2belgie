@@ -1,4 +1,4 @@
-// src/components/pricing/DynamicPricing.tsx - Updated Version
+// src/components/pricing/DynamicPricing.tsx - Fixed Modal Flow
 'use client';
 
 import { useState } from 'react';
@@ -259,15 +259,13 @@ export default function DynamicPricing({
     setShowEmailModal(true);
   };
 
+  // FIXED: Let modal handle its own flow - don't close it prematurely
   const handleEmailCapture = (email: string) => {
     if (onEmailCapture) {
       onEmailCapture(email);
     }
-    setShowEmailModal(false);
-    // Redirect to payment or show success
-    setTimeout(() => {
-      window.location.href = '#telegram';
-    }, 1000);
+    // Modal will show success state and handle its own closing
+    // after user contacts support via WhatsApp/Telegram
   };
 
   const getComparisonText = (language: string) => {
