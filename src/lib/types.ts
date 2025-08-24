@@ -1,3 +1,4 @@
+// src/lib/types.ts
 export type Language = 'fr-BE' | 'nl-BE' | 'en';
 
 export interface HeroSlide {
@@ -15,7 +16,7 @@ export interface HeroSlide {
 
 export interface MovieSection {
   id: string;
-  title: { 'fr-BE': string; 'nl-BE': string; 'en': string };
+  title: { 'fr-BE': string; 'nl-BE': string; en: string };
   movies: string[];
 }
 
@@ -31,7 +32,12 @@ export interface BrandLogo {
   path: string;
 }
 
-export type EmailCaptureSource = "hero" | "modal" | "pricing" | "email_capture" | "exit_intent";
+export type EmailCaptureSource =
+  | 'hero'
+  | 'modal'
+  | 'pricing'
+  | 'email_capture'
+  | 'exit_intent';
 
 export interface EmailCaptureData {
   email: string;
@@ -61,4 +67,23 @@ export interface SubscriptionPlan {
   features: string[];
   popular?: boolean;
   badge?: string;
+}
+
+// ADD THIS NEW INTERFACE FOR PRICING
+export interface PricingPlan {
+  id: string;
+  duration: {
+    'nl-BE': string;
+    'fr-BE': string;
+    en: string;
+  };
+  price: number;
+  monthly: number;
+  badge?: {
+    'nl-BE': string;
+    'fr-BE': string;
+    en: string;
+  } | null;
+  savings?: string | null;
+  popular?: boolean;
 }

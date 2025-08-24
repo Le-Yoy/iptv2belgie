@@ -4,10 +4,20 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+interface PricingPlan {
+  id: string;
+  duration: { 'nl-BE': string; 'fr-BE': string; en: string };
+  price: number;
+  monthly: number;
+  badge: { 'nl-BE': string; 'fr-BE': string; en: string } | null;
+  savings: string | null;
+  popular: boolean;
+}
+
 interface EmailCaptureModalProps {
   isOpen: boolean;
   onClose: () => void;
-  plan: any;
+  plan: PricingPlan;
   language: 'nl-BE' | 'fr-BE' | 'en';
   onEmailCapture?: (email: string) => void;
 }
@@ -90,6 +100,10 @@ export default function EmailCaptureModal({
       telegramButton: 'Betalen via Telegram',
       telegramDesc: 'Snelle geautomatiseerde service',
       customerInfo: 'Klant #',
+      timelineStep1: 'Bestelling Geplaatst',
+      timelineStep2: 'Contact Support',
+      timelineStep3: 'Toegang Krijgen',
+      paymentMethods: 'We accepteren: 💳 Bankoverschrijving • PayPal • Crypto',
     },
     'fr-BE': {
       title: 'Dernière Étape!',
@@ -110,6 +124,10 @@ export default function EmailCaptureModal({
       telegramButton: 'Payer via Telegram',
       telegramDesc: 'Service automatisé rapide',
       customerInfo: 'Client #',
+      timelineStep1: 'Commande Passée',
+      timelineStep2: 'Contacter Support',
+      timelineStep3: 'Obtenir Accès',
+      paymentMethods: 'Nous acceptons: 💳 Virement • PayPal • Crypto',
     },
     en: {
       title: 'Final Step!',
@@ -130,6 +148,10 @@ export default function EmailCaptureModal({
       telegramButton: 'Pay via Telegram',
       telegramDesc: 'Fast automated service',
       customerInfo: 'Customer #',
+      timelineStep1: 'Order Placed',
+      timelineStep2: 'Contact Support',
+      timelineStep3: 'Get Access',
+      paymentMethods: 'We accept: 💳 Bank Transfer • PayPal • Crypto',
     },
   };
 
@@ -268,6 +290,36 @@ export default function EmailCaptureModal({
                 </div>
               </div>
 
+              {/* Timeline Indicator */}
+              <div className="bg-slate-800/50 rounded-xl p-4 mb-6">
+                <div className="flex items-center justify-between text-sm">
+                  <div className="flex flex-col items-center space-y-2">
+                    <div className="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center text-white text-xs">
+                      1
+                    </div>
+                    <span className="text-gray-300 text-center text-xs">
+                      {text.timelineStep1}
+                    </span>
+                  </div>
+                  <div className="flex flex-col items-center space-y-2">
+                    <div className="w-8 h-8 bg-sky-500 rounded-full flex items-center justify-center text-white text-xs">
+                      2
+                    </div>
+                    <span className="text-gray-300 text-center text-xs">
+                      {text.timelineStep2}
+                    </span>
+                  </div>
+                  <div className="flex flex-col items-center space-y-2">
+                    <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center text-gray-400 text-xs">
+                      3
+                    </div>
+                    <span className="text-gray-400 text-center text-xs">
+                      {text.timelineStep3}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
               {/* Credentials Promise */}
               <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-4 mb-8">
                 <div className="flex items-start space-x-3">
@@ -327,6 +379,11 @@ export default function EmailCaptureModal({
                     </div>
                   </motion.button>
                 </div>
+              </div>
+
+              {/* Payment Methods Accepted */}
+              <div className="text-center text-xs text-gray-500 mb-4">
+                <p>{text.paymentMethods}</p>
               </div>
 
               {/* Trust indicators */}
