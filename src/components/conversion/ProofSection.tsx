@@ -242,10 +242,35 @@ export default function ProofSection({ language }: ProofSectionProps) {
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
                     whileTap={{ scale: 0.98 }}
+                    animate={
+                      activeTab !== tab.id
+                        ? {
+                            boxShadow: [
+                              '0 0 0 0px rgba(234, 179, 8, 0)',
+                              '0 0 0 2px rgba(234, 179, 8, 0.3)',
+                              '0 0 0 0px rgba(234, 179, 8, 0)',
+                            ],
+                            borderColor: [
+                              'rgba(75, 85, 99, 1)',
+                              'rgba(234, 179, 8, 0.5)',
+                              'rgba(75, 85, 99, 1)',
+                            ],
+                          }
+                        : {}
+                    }
+                    transition={
+                      activeTab !== tab.id
+                        ? {
+                            duration: 2,
+                            repeat: Infinity,
+                            repeatDelay: 3,
+                          }
+                        : {}
+                    }
                     className={`relative py-4 px-3 rounded-xl font-semibold transition-all duration-300 ${
                       activeTab === tab.id
                         ? 'bg-gradient-to-r from-yellow-400 to-orange-500 text-black shadow-lg shadow-yellow-500/30'
-                        : 'bg-gray-800/80 text-gray-300 border border-gray-700'
+                        : 'bg-gray-800/80 text-gray-300 border border-gray-600 hover:border-yellow-500/50 hover:bg-gray-700/80 cursor-pointer'
                     }`}
                   >
                     {/* Active Indicator */}
@@ -287,22 +312,24 @@ export default function ProofSection({ language }: ProofSectionProps) {
                       </motion.div>
                     )}
 
-                    {/* Tap Hint for Inactive Tabs */}
+                    {/* Interactive Indicator for Inactive Tabs */}
                     {activeTab !== tab.id && (
-                      <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2">
-                        <div className="text-xs text-gray-500">Tap</div>
-                      </div>
+                      <motion.div
+                        animate={{
+                          opacity: [0.3, 0.8, 0.3],
+                          scale: [1, 1.1, 1],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          repeatDelay: 4,
+                        }}
+                        className="absolute top-2 right-2 w-2 h-2 bg-yellow-400 rounded-full"
+                      />
                     )}
                   </motion.button>
                 ))}
               </div>
-            </div>
-
-            {/* Mobile Instructions */}
-            <div className="mt-3 text-center">
-              <p className="text-xs text-gray-500">
-                Tap any button above to see details
-              </p>
             </div>
           </div>
 
