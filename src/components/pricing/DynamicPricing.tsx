@@ -58,36 +58,36 @@ const pricingData: Record<string, PricingPlan[]> = {
     {
       id: '12month-2d',
       duration: { 'nl-BE': '12 Maanden', 'fr-BE': '12 Mois', en: '12 Months' },
-      price: 59,
-      monthly: 4.92,
+      price: 118, // (69 * 2) - 20
+      monthly: 9.83,
       badge: {
         'nl-BE': 'MAXIMALE BESPARING',
         'fr-BE': 'ÉCONOMIE MAX',
         en: 'MAX SAVINGS',
       },
-      savings: '67%',
+      savings: '34%',
       popular: true,
     },
     {
       id: '3month-2d',
       duration: { 'nl-BE': '3 Maanden', 'fr-BE': '3 Mois', en: '3 Months' },
-      price: 30,
-      monthly: 10,
+      price: 60, // (35 * 2) - 10
+      monthly: 20,
       badge: {
         'nl-BE': 'MEEST GEKOZEN',
         'fr-BE': 'PLUS CHOISI',
         en: 'MOST CHOSEN',
       },
-      savings: '33%',
+      savings: '20%',
       popular: false,
     },
     {
       id: '1month-2d',
       duration: { 'nl-BE': '1 Maand', 'fr-BE': '1 Mois', en: '1 Month' },
-      price: 12,
-      monthly: 12,
+      price: 25, // (15 * 2) - 5
+      monthly: 25,
       badge: { 'nl-BE': 'GEZIN', 'fr-BE': 'FAMILLE', en: 'FAMILY' },
-      savings: '20%',
+      savings: '17%',
       popular: false,
     },
   ],
@@ -95,36 +95,36 @@ const pricingData: Record<string, PricingPlan[]> = {
     {
       id: '12month-3d',
       duration: { 'nl-BE': '12 Maanden', 'fr-BE': '12 Mois', en: '12 Months' },
-      price: 49,
-      monthly: 4.08,
+      price: 167, // (69 * 3) - 40
+      monthly: 13.92,
       badge: {
         'nl-BE': 'MAXIMALE BESPARING',
         'fr-BE': 'ÉCONOMIE MAX',
         en: 'MAX SAVINGS',
       },
-      savings: '73%',
+      savings: '38%',
       popular: true,
     },
     {
       id: '3month-3d',
       duration: { 'nl-BE': '3 Maanden', 'fr-BE': '3 Mois', en: '3 Months' },
-      price: 25,
-      monthly: 8.33,
+      price: 85, // (35 * 3) - 20
+      monthly: 28.33,
       badge: {
         'nl-BE': 'MEEST GEKOZEN',
         'fr-BE': 'PLUS CHOISI',
         en: 'MOST CHOSEN',
       },
-      savings: '44%',
+      savings: '24%',
       popular: false,
     },
     {
       id: '1month-3d',
       duration: { 'nl-BE': '1 Maand', 'fr-BE': '1 Mois', en: '1 Month' },
-      price: 10,
-      monthly: 10,
+      price: 35, // (15 * 3) - 10
+      monthly: 35,
       badge: null,
-      savings: '33%',
+      savings: '22%',
       popular: false,
     },
   ],
@@ -132,36 +132,36 @@ const pricingData: Record<string, PricingPlan[]> = {
     {
       id: '12month-4d',
       duration: { 'nl-BE': '12 Maanden', 'fr-BE': '12 Mois', en: '12 Months' },
-      price: 39,
-      monthly: 3.25,
+      price: 206, // (69 * 4) - 70
+      monthly: 17.17,
       badge: {
         'nl-BE': 'MAXIMALE BESPARING',
         'fr-BE': 'ÉCONOMIE MAX',
         en: 'MAX SAVINGS',
       },
-      savings: '78%',
+      savings: '43%',
       popular: true,
     },
     {
       id: '3month-4d',
       duration: { 'nl-BE': '3 Maanden', 'fr-BE': '3 Mois', en: '3 Months' },
-      price: 20,
-      monthly: 6.67,
+      price: 105, // (35 * 4) - 35
+      monthly: 35,
       badge: {
         'nl-BE': 'MEEST GEKOZEN',
         'fr-BE': 'PLUS CHOISI',
         en: 'MOST CHOSEN',
       },
-      savings: '56%',
+      savings: '30%',
       popular: false,
     },
     {
       id: '1month-4d',
       duration: { 'nl-BE': '1 Maand', 'fr-BE': '1 Mois', en: '1 Month' },
-      price: 8,
-      monthly: 8,
+      price: 45, // (15 * 4) - 15
+      monthly: 45,
       badge: null,
-      savings: '47%',
+      savings: '25%',
       popular: false,
     },
   ],
@@ -169,36 +169,36 @@ const pricingData: Record<string, PricingPlan[]> = {
     {
       id: '12month-5d',
       duration: { 'nl-BE': '12 Maanden', 'fr-BE': '12 Mois', en: '12 Months' },
-      price: 29,
-      monthly: 2.42,
+      price: 245, // (69 * 5) - 100
+      monthly: 20.42,
       badge: {
         'nl-BE': 'MAXIMALE BESPARING',
         'fr-BE': 'ÉCONOMIE MAX',
         en: 'MAX SAVINGS',
       },
-      savings: '84%',
+      savings: '47%',
       popular: true,
     },
     {
       id: '3month-5d',
       duration: { 'nl-BE': '3 Maanden', 'fr-BE': '3 Mois', en: '3 Months' },
-      price: 15,
-      monthly: 5,
+      price: 125, // (35 * 5) - 50
+      monthly: 41.67,
       badge: {
         'nl-BE': 'MEEST GEKOZEN',
         'fr-BE': 'PLUS CHOISI',
         en: 'MOST CHOSEN',
       },
-      savings: '67%',
+      savings: '33%',
       popular: false,
     },
     {
       id: '1month-5d',
       duration: { 'nl-BE': '1 Maand', 'fr-BE': '1 Mois', en: '1 Month' },
-      price: 6,
-      monthly: 6,
+      price: 55, // (15 * 5) - 20
+      monthly: 55,
       badge: null,
-      savings: '60%',
+      savings: '27%',
       popular: false,
     },
   ],
