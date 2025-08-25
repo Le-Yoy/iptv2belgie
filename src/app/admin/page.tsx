@@ -55,10 +55,18 @@ export default function AdminDashboard() {
   }, [orders, filter, searchTerm]);
 
   const checkAuth = async () => {
+    // Simple localStorage check
+    if (localStorage.getItem('admin_auth') !== 'true') {
+      router.push('/admin/login');
+      return;
+    }
+
+    // Also verify with Supabase
     const {
       data: { session },
     } = await supabase.auth.getSession();
-    if (!session || session.user.email !== 'payments@iptv2belgie.be') {
+    if (!session || session.user.email !== 'payment@iptv2belgie.be') {
+      localStorage.removeItem('admin_auth');
       router.push('/admin/login');
     }
   };
