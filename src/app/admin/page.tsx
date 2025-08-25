@@ -58,7 +58,7 @@ export default function AdminDashboard() {
     const {
       data: { session },
     } = await supabase.auth.getSession();
-    if (!session || session.user.email !== 'leboutaleb@gmail.com') {
+    if (!session || session.user.email !== 'payments@iptv2belgie.be') {
       router.push('/admin/login');
     }
   };

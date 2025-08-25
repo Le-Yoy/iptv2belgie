@@ -20,7 +20,7 @@ export async function middleware(req: NextRequest) {
     }
 
     // Verify admin email
-    if (session.user.email !== 'leboutaleb@gmail.com') {
+    if (session.user.email !== 'payments@iptv2belgie.be') {
       return NextResponse.redirect(new URL('/', req.url));
     }
   }

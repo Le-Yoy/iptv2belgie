@@ -29,7 +29,7 @@ export default function AdminLogin() {
 
       if (error) throw error;
 
-      if (data.user?.email === 'leboutaleb@gmail.com') {
+      if (data.user?.email === 'payments@iptv2belgie.be') {
         router.push('/admin');
         router.refresh();
       } else {
