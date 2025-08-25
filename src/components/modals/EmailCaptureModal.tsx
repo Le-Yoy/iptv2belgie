@@ -1,4 +1,4 @@
-// src/components/modals/EmailCaptureModal.tsx - Sequential Customer Numbers
+// src/components/modals/EmailCaptureModal.tsx - Database Integration
 'use client';
 
 import { useState } from 'react';
@@ -33,69 +33,65 @@ export default function EmailCaptureModal({
   const [phone, setPhone] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-
-  // Sequential customer number starting from 3278
-  const [customerNumber] = useState(() => {
-    const getNextCustomerNumber = () => {
-      const baseNumber = 3278;
-      let storedNumber;
-
-      try {
-        storedNumber = localStorage.getItem('last_customer_number');
-      } catch (error) {
-        // Fallback if localStorage is not available
-        storedNumber = null;
-      }
-
-      if (storedNumber) {
-        const lastNumber = parseInt(storedNumber, 10);
-        if (!isNaN(lastNumber)) {
-          const nextNumber = lastNumber + 1;
-          try {
-            localStorage.setItem('last_customer_number', nextNumber.toString());
-          } catch (error) {
-            // Silently handle localStorage errors
-          }
-          return nextNumber;
-        }
-      }
-
-      // First time or invalid stored number - start from base
-      try {
-        localStorage.setItem('last_customer_number', baseNumber.toString());
-      } catch (error) {
-        // Silently handle localStorage errors
-      }
-      return baseNumber;
-    };
-
-    return getNextCustomerNumber();
-  });
+  const [customerNumber, setCustomerNumber] = useState(3278); // Default value
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
-    if (onEmailCapture) {
-      onEmailCapture(email);
-    }
-
-    // Store in localStorage for persistence
     try {
-      localStorage.setItem('user_email', email);
-      localStorage.setItem('user_phone', phone);
-      localStorage.setItem('selected_plan', JSON.stringify(plan));
-      localStorage.setItem('customer_number', customerNumber.toString());
-    } catch (error) {
-      // Handle localStorage errors silently
-      console.log('Storage not available');
-    }
+      // Extract device count from plan ID
+      const deviceMatch =
+        plan.id.match(/(\d+)-devices?/) || plan.id.match(/(\d)d$/);
+      const deviceCount = deviceMatch ? parseInt(deviceMatch[1]) : 1;
 
-    setIsSubmitting(false);
-    setIsSuccess(true);
+      // Call API to save order
+      const response = await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          phone,
+          planId: plan.id,
+          planDuration: plan.duration[language],
+          planPrice: plan.price,
+          deviceCount,
+          language,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        // Update customer number from database
+        setCustomerNumber(result.data.customer_number);
+
+        // Store in localStorage as backup
+        localStorage.setItem('user_email', email);
+        localStorage.setItem(
+          'customer_number',
+          result.data.customer_number.toString()
+        );
+
+        if (onEmailCapture) {
+          onEmailCapture(email);
+        }
+
+        setIsSuccess(true);
+      } else {
+        throw new Error('Failed to create order');
+      }
+    } catch (error) {
+      console.error('Order submission error:', error);
+      // Fallback to localStorage if API fails
+      const fallbackNumber = Math.floor(Math.random() * 9000) + 3000;
+      setCustomerNumber(fallbackNumber);
+      localStorage.setItem('user_email', email);
+      localStorage.setItem('customer_number', fallbackNumber.toString());
+      setIsSuccess(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const openWhatsApp = () => {
