@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@supabase/supabase-js';
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('');
@@ -17,6 +17,11 @@ export default function AdminLogin() {
     setError('');
 
     try {
+      const supabase = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      );
+
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -40,13 +45,11 @@ export default function AdminLogin() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        {/* Logo/Title */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-white mb-2">IPTV2Belgie</h1>
           <p className="text-gray-400">Admin Portal</p>
         </div>
 
-        {/* Login Form */}
         <form
           onSubmit={handleLogin}
           className="bg-slate-800/50 backdrop-blur-md p-8 rounded-2xl shadow-2xl border border-slate-700"
