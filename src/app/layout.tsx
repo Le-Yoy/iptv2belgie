@@ -1,7 +1,5 @@
-// src/app/layout.tsx
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import AuthHandler from '@/components/AuthHandler';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -61,10 +59,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="nl" className="scroll-smooth">
-      <body
-        className={`${inter.className} bg-slate-900 text-white antialiased`}
-      >
-        <AuthHandler />
+      <body className={`${inter.className} bg-slate-900 text-white antialiased`}>
         {children}
       </body>
     </html>
