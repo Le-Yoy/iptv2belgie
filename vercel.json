@@ -1,7 +1,4 @@
 {
-  "functions": {
-    "src/app/api/send-email/route.ts": {
-      "maxDuration": 10
-    }
-  }
+  "buildCommand": "next build",
+  "outputDirectory": ".next"
 }
