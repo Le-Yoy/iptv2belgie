@@ -77,6 +77,82 @@ export default function EmailCaptureModal({
           onEmailCapture(email);
         }
 
+        // Send confirmation email to customer
+        try {
+          await fetch('/api/send-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              to: email,
+              subject: `IPTV2Belgie - ${
+                language === 'nl-BE'
+                  ? 'Bestelling Bevestigd'
+                  : language === 'fr-BE'
+                    ? 'Commande Confirmée'
+                    : 'Order Confirmed'
+              }`,
+              html: `
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                  <h2 style="color: #0ea5e9;">
+                    ${language === 'nl-BE' ? 'Bestelling Bevestigd!' : language === 'fr-BE' ? 'Commande Confirmée!' : 'Order Confirmed!'}
+                  </h2>
+                  <p>Customer #${result.data.customer_number}</p>
+                  <div style="background: #f3f4f6; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                    <p><strong>Plan:</strong> ${plan.duration[language]}</p>
+                    <p><strong>Price:</strong> €${plan.price}</p>
+                    <p><strong>Devices:</strong> ${deviceCount}</p>
+                    <p><strong>Email:</strong> ${email}</p>
+                    ${phone ? `<p><strong>Phone:</strong> ${phone}</p>` : ''}
+                  </div>
+                  <p>${
+                    language === 'nl-BE'
+                      ? 'U ontvangt uw inloggegevens binnen 5 minuten op uw e-mail nadat de betaling is bevestigd.'
+                      : language === 'fr-BE'
+                        ? 'Vous recevrez vos identifiants dans les 5 minutes par email après confirmation du paiement.'
+                        : 'You will receive your login credentials within 5 minutes via email after payment confirmation.'
+                  }</p>
+                  <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 30px 0;">
+                  <p style="color: #6b7280; font-size: 12px;">IPTV2Belgie - Premium IPTV Service</p>
+                </div>
+              `,
+            }),
+          });
+        } catch (emailError) {
+          console.error('Customer email failed:', emailError);
+          // Don't block the order on email failure
+        }
+
+        // Notify admin of new order
+        try {
+          await fetch('/api/send-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              to: 'payment@iptv2belgie.be',
+              subject: `New Order #${result.data.customer_number}`,
+              html: `
+                <div style="font-family: Arial, sans-serif;">
+                  <h3 style="color: #0ea5e9;">New Order Received</h3>
+                  <div style="background: #f3f4f6; padding: 15px; border-radius: 8px;">
+                    <p><strong>Order Number:</strong> #${result.data.customer_number}</p>
+                    <p><strong>Customer:</strong> ${email}</p>
+                    <p><strong>Phone:</strong> ${phone || 'Not provided'}</p>
+                    <p><strong>Plan:</strong> ${plan.duration[language]}</p>
+                    <p><strong>Price:</strong> €${plan.price}</p>
+                    <p><strong>Devices:</strong> ${deviceCount}</p>
+                    <p><strong>Language:</strong> ${language}</p>
+                  </div>
+                  <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 20px 0;">
+                  <p>Login to admin panel to manage: <a href="https://iptv2belgie.be/admin">https://iptv2belgie.be/admin</a></p>
+                </div>
+              `,
+            }),
+          });
+        } catch (adminEmailError) {
+          console.error('Admin notification failed:', adminEmailError);
+          // Don't block on admin email failure
+        }
+
         setIsSuccess(true);
       } else {
         throw new Error('Failed to create order');
