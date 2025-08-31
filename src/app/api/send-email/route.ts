@@ -5,6 +5,9 @@ export async function POST(request: Request) {
   try {
     const { to, subject, html } = await request.json();
 
+    // Log for debugging
+    console.log('Email request received:', { to, subject });
+
     const transporter = nodemailer.createTransport({
       host: 'smtp-auth.mailprotect.be',
       port: 587,
@@ -13,17 +16,22 @@ export async function POST(request: Request) {
         user: 'payment@iptv2belgie.be',
         pass: process.env.EMAIL_PASSWORD,
       },
+      tls: {
+        rejectUnauthorized: false,
+      },
     });
 
-    await transporter.sendMail({
-      from: 'payment@iptv2belgie.be',
+    const info = await transporter.sendMail({
+      from: '"IPTV2Belgie" <payment@iptv2belgie.be>',
       to,
       subject,
       html,
     });
 
-    return NextResponse.json({ success: true });
+    console.log('Email sent:', info.messageId);
+    return NextResponse.json({ success: true, messageId: info.messageId });
   } catch (error: any) {
+    console.error('Email error:', error);
     return NextResponse.json(
       {
         success: false,
