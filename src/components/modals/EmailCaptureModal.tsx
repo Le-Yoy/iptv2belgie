@@ -1,8 +1,12 @@
-// src/components/modals/EmailCaptureModal.tsx - Database Integration
+// src/components/modals/EmailCaptureModal.tsx - EmailJS Integration
 'use client';
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import emailjs from '@emailjs/browser';
+
+// Initialize EmailJS
+emailjs.init('r-TxVcUofG77t4JyM');
 
 interface PricingPlan {
   id: string;
@@ -39,12 +43,12 @@ export default function EmailCaptureModal({
     e.preventDefault();
     setIsSubmitting(true);
 
-    try {
-      // Extract device count from plan ID
-      const deviceMatch =
-        plan.id.match(/(\d+)-devices?/) || plan.id.match(/(\d)d$/);
-      const deviceCount = deviceMatch ? parseInt(deviceMatch[1]) : 1;
+    // Extract device count from plan ID (accessible in try and catch)
+    const deviceMatch =
+      plan.id.match(/(\d+)-devices?/) || plan.id.match(/(\d)d$/);
+    const deviceCount = deviceMatch ? parseInt(deviceMatch[1]) : 1;
 
+    try {
       // Call API to save order
       const response = await fetch('/api/orders', {
         method: 'POST',
@@ -77,77 +81,101 @@ export default function EmailCaptureModal({
           onEmailCapture(email);
         }
 
-        // Send confirmation email to customer
+        // Prepare email variables
+        const emailVariables = {
+          // Common variables
+          customer_number: result.data.customer_number,
+          customer_email: email,
+          customer_phone: phone || 'Not provided',
+          plan_duration: plan.duration[language],
+          plan_price: plan.price,
+          device_count: deviceCount,
+          language: language,
+
+          // Language-specific variables
+          confirmation_title:
+            language === 'nl-BE'
+              ? 'Bestelling Bevestigd!'
+              : language === 'fr-BE'
+                ? 'Commande Confirmée!'
+                : 'Order Confirmed!',
+          thank_you_message:
+            language === 'nl-BE'
+              ? 'Bedankt voor uw bestelling'
+              : language === 'fr-BE'
+                ? 'Merci pour votre commande'
+                : 'Thank you for your order',
+          order_number_label:
+            language === 'nl-BE'
+              ? 'Bestelnummer'
+              : language === 'fr-BE'
+                ? 'Numéro de commande'
+                : 'Order Number',
+          plan_label:
+            language === 'nl-BE'
+              ? 'Abonnement'
+              : language === 'fr-BE'
+                ? 'Abonnement'
+                : 'Subscription',
+          devices_label:
+            language === 'nl-BE'
+              ? 'Apparaten'
+              : language === 'fr-BE'
+                ? 'Appareils'
+                : 'Devices',
+          total_label:
+            language === 'nl-BE'
+              ? 'Totaal'
+              : language === 'fr-BE'
+                ? 'Total'
+                : 'Total',
+          next_steps_title:
+            language === 'nl-BE'
+              ? 'Volgende Stappen'
+              : language === 'fr-BE'
+                ? 'Prochaines Étapes'
+                : 'Next Steps',
+          payment_instruction:
+            language === 'nl-BE'
+              ? 'Contacteer ons via WhatsApp of Telegram om uw betaling te voltooien.'
+              : language === 'fr-BE'
+                ? 'Contactez-nous via WhatsApp ou Telegram pour finaliser votre paiement.'
+                : 'Contact us via WhatsApp or Telegram to complete your payment.',
+          credentials_message:
+            language === 'nl-BE'
+              ? 'U ontvangt uw inloggegevens binnen 5 minuten na betalingsbevestiging.'
+              : language === 'fr-BE'
+                ? 'Vous recevrez vos identifiants dans les 5 minutes après confirmation du paiement.'
+                : 'You will receive your login credentials within 5 minutes after payment confirmation.',
+          footer_support:
+            language === 'nl-BE'
+              ? 'Heeft u hulp nodig? Contacteer ons support team'
+              : language === 'fr-BE'
+                ? "Besoin d'aide? Contactez notre équipe support"
+                : 'Need help? Contact our support team',
+        };
+
+        // Send confirmation email to customer using EmailJS
         try {
-          await fetch('/api/send-email', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              to: email,
-              subject: `IPTV2Belgie - ${
-                language === 'nl-BE'
-                  ? 'Bestelling Bevestigd'
-                  : language === 'fr-BE'
-                    ? 'Commande Confirmée'
-                    : 'Order Confirmed'
-              }`,
-              html: `
-                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-                  <h2 style="color: #0ea5e9;">
-                    ${language === 'nl-BE' ? 'Bestelling Bevestigd!' : language === 'fr-BE' ? 'Commande Confirmée!' : 'Order Confirmed!'}
-                  </h2>
-                  <p>Customer #${result.data.customer_number}</p>
-                  <div style="background: #f3f4f6; padding: 15px; border-radius: 8px; margin: 20px 0;">
-                    <p><strong>Plan:</strong> ${plan.duration[language]}</p>
-                    <p><strong>Price:</strong> €${plan.price}</p>
-                    <p><strong>Devices:</strong> ${deviceCount}</p>
-                    <p><strong>Email:</strong> ${email}</p>
-                    ${phone ? `<p><strong>Phone:</strong> ${phone}</p>` : ''}
-                  </div>
-                  <p>${
-                    language === 'nl-BE'
-                      ? 'U ontvangt uw inloggegevens binnen 5 minuten op uw e-mail nadat de betaling is bevestigd.'
-                      : language === 'fr-BE'
-                        ? 'Vous recevrez vos identifiants dans les 5 minutes par email après confirmation du paiement.'
-                        : 'You will receive your login credentials within 5 minutes via email after payment confirmation.'
-                  }</p>
-                  <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 30px 0;">
-                  <p style="color: #6b7280; font-size: 12px;">IPTV2Belgie - Premium IPTV Service</p>
-                </div>
-              `,
-            }),
-          });
+          await emailjs.send(
+            'service_v3y8dra',
+            'template_z7vmgeg',
+            emailVariables
+          );
+          console.log('Customer confirmation email sent successfully');
         } catch (emailError) {
           console.error('Customer email failed:', emailError);
           // Don't block the order on email failure
         }
 
-        // Notify admin of new order
+        // Send admin notification using EmailJS
         try {
-          await fetch('/api/send-email', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              to: 'payment@iptv2belgie.be',
-              subject: `New Order #${result.data.customer_number}`,
-              html: `
-                <div style="font-family: Arial, sans-serif;">
-                  <h3 style="color: #0ea5e9;">New Order Received</h3>
-                  <div style="background: #f3f4f6; padding: 15px; border-radius: 8px;">
-                    <p><strong>Order Number:</strong> #${result.data.customer_number}</p>
-                    <p><strong>Customer:</strong> ${email}</p>
-                    <p><strong>Phone:</strong> ${phone || 'Not provided'}</p>
-                    <p><strong>Plan:</strong> ${plan.duration[language]}</p>
-                    <p><strong>Price:</strong> €${plan.price}</p>
-                    <p><strong>Devices:</strong> ${deviceCount}</p>
-                    <p><strong>Language:</strong> ${language}</p>
-                  </div>
-                  <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 20px 0;">
-                  <p>Login to admin panel to manage: <a href="https://iptv2belgie.be/admin">https://iptv2belgie.be/admin</a></p>
-                </div>
-              `,
-            }),
-          });
+          await emailjs.send(
+            'service_v3y8dra',
+            'template_cndg3kw',
+            emailVariables
+          );
+          console.log('Admin notification sent successfully');
         } catch (adminEmailError) {
           console.error('Admin notification failed:', adminEmailError);
           // Don't block on admin email failure
@@ -164,6 +192,93 @@ export default function EmailCaptureModal({
       setCustomerNumber(fallbackNumber);
       localStorage.setItem('user_email', email);
       localStorage.setItem('customer_number', fallbackNumber.toString());
+
+      // Still try to send emails with fallback data
+      const fallbackVariables = {
+        customer_number: fallbackNumber,
+        customer_email: email,
+        customer_phone: phone || 'Not provided',
+        plan_duration: plan.duration[language],
+        plan_price: plan.price,
+        device_count: deviceCount,
+        language: language,
+        confirmation_title:
+          language === 'nl-BE'
+            ? 'Bestelling Bevestigd!'
+            : language === 'fr-BE'
+              ? 'Commande Confirmée!'
+              : 'Order Confirmed!',
+        thank_you_message:
+          language === 'nl-BE'
+            ? 'Bedankt voor uw bestelling'
+            : language === 'fr-BE'
+              ? 'Merci pour votre commande'
+              : 'Thank you for your order',
+        order_number_label:
+          language === 'nl-BE'
+            ? 'Bestelnummer'
+            : language === 'fr-BE'
+              ? 'Numéro de commande'
+              : 'Order Number',
+        plan_label:
+          language === 'nl-BE'
+            ? 'Abonnement'
+            : language === 'fr-BE'
+              ? 'Abonnement'
+              : 'Subscription',
+        devices_label:
+          language === 'nl-BE'
+            ? 'Apparaten'
+            : language === 'fr-BE'
+              ? 'Appareils'
+              : 'Devices',
+        total_label:
+          language === 'nl-BE'
+            ? 'Totaal'
+            : language === 'fr-BE'
+              ? 'Total'
+              : 'Total',
+        next_steps_title:
+          language === 'nl-BE'
+            ? 'Volgende Stappen'
+            : language === 'fr-BE'
+              ? 'Prochaines Étapes'
+              : 'Next Steps',
+        payment_instruction:
+          language === 'nl-BE'
+            ? 'Contacteer ons via WhatsApp of Telegram om uw betaling te voltooien.'
+            : language === 'fr-BE'
+              ? 'Contactez-nous via WhatsApp ou Telegram pour finaliser votre paiement.'
+              : 'Contact us via WhatsApp or Telegram to complete your payment.',
+        credentials_message:
+          language === 'nl-BE'
+            ? 'U ontvangt uw inloggegevens binnen 5 minuten na betalingsbevestiging.'
+            : language === 'fr-BE'
+              ? 'Vous recevrez vos identifiants dans les 5 minutes après confirmation du paiement.'
+              : 'You will receive your login credentials within 5 minutes after payment confirmation.',
+        footer_support:
+          language === 'nl-BE'
+            ? 'Heeft u hulp nodig? Contacteer ons support team'
+            : language === 'fr-BE'
+              ? "Besoin d'aide? Contactez notre équipe support"
+              : 'Need help? Contact our support team',
+      };
+
+      try {
+        await emailjs.send(
+          'service_v3y8dra',
+          'template_z7vmgeg',
+          fallbackVariables
+        );
+        await emailjs.send(
+          'service_v3y8dra',
+          'template_cndg3kw',
+          fallbackVariables
+        );
+      } catch (fallbackEmailError) {
+        console.error('Fallback email failed:', fallbackEmailError);
+      }
+
       setIsSuccess(true);
     } finally {
       setIsSubmitting(false);
