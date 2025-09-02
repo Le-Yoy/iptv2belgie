@@ -92,7 +92,54 @@ export default function EmailCaptureModal({
           device_count: deviceCount,
           language: language,
 
-          // Language-specific variables
+          // Payment-specific variables
+          payment_amount: plan.price,
+          payment_reference: `BRENDT${result.data.customer_number}`,
+          iban: 'IE14CITI99005171150683',
+          bic: 'CITIIE2X',
+          beneficiary: 'BOUTALEB LLC',
+          whatsapp_number: '+32465123456',
+          telegram_handle: '@iptv2belgie_support',
+
+          // Payment instruction texts
+          payment_instruction_title:
+            language === 'nl-BE'
+              ? 'Betalingsinstructies'
+              : language === 'fr-BE'
+                ? 'Instructions de Paiement'
+                : 'Payment Instructions',
+          payment_exact_amount:
+            language === 'nl-BE'
+              ? `Maak exact €${plan.price} over naar:`
+              : language === 'fr-BE'
+                ? `Transférez exactement €${plan.price} à:`
+                : `Transfer exactly €${plan.price} to:`,
+          payment_reference_warning:
+            language === 'nl-BE'
+              ? '⚠️ BELANGRIJK: Gebruik deze referentie of uw betaling wordt vertraagd!'
+              : language === 'fr-BE'
+                ? '⚠️ IMPORTANT: Utilisez cette référence ou votre paiement sera retardé!'
+                : '⚠️ IMPORTANT: Use this reference or your payment will be delayed!',
+          screenshot_instruction:
+            language === 'nl-BE'
+              ? 'Stuur screenshot van betaling naar:'
+              : language === 'fr-BE'
+                ? "Envoyez une capture d'écran du paiement à:"
+                : 'Send payment screenshot to:',
+          credentials_timing:
+            language === 'nl-BE'
+              ? 'U ontvangt uw toegang binnen 10 minuten na bevestiging'
+              : language === 'fr-BE'
+                ? 'Vous recevrez vos accès dans les 10 minutes après confirmation'
+                : 'You will receive your credentials within 10 minutes after confirmation',
+          peak_time_notice:
+            language === 'nl-BE'
+              ? 'Tijdens piekuren kan dit tot 1 uur duren'
+              : language === 'fr-BE'
+                ? "Pendant les heures de pointe, cela peut prendre jusqu'à 1 heure"
+                : 'During peak times this may take up to 1 hour',
+
+          // Language-specific variables (existing)
           confirmation_title:
             language === 'nl-BE'
               ? 'Bestelling Bevestigd!'
@@ -202,6 +249,54 @@ export default function EmailCaptureModal({
         plan_price: plan.price,
         device_count: deviceCount,
         language: language,
+
+        // Payment-specific variables
+        payment_amount: plan.price,
+        payment_reference: `BRENDT${fallbackNumber}`,
+        iban: 'IE14CITI99005171150683',
+        bic: 'CITIIE2X',
+        beneficiary: 'BOUTALEB LLC',
+        whatsapp_number: '+32465123456',
+        telegram_handle: '@iptv2belgie_support',
+
+        // Payment instruction texts
+        payment_instruction_title:
+          language === 'nl-BE'
+            ? 'Betalingsinstructies'
+            : language === 'fr-BE'
+              ? 'Instructions de Paiement'
+              : 'Payment Instructions',
+        payment_exact_amount:
+          language === 'nl-BE'
+            ? `Maak exact €${plan.price} over naar:`
+            : language === 'fr-BE'
+              ? `Transférez exactement €${plan.price} à:`
+              : `Transfer exactly €${plan.price} to:`,
+        payment_reference_warning:
+          language === 'nl-BE'
+            ? '⚠️ BELANGRIJK: Gebruik deze referentie of uw betaling wordt vertraagd!'
+            : language === 'fr-BE'
+              ? '⚠️ IMPORTANT: Utilisez cette référence ou votre paiement sera retardé!'
+              : '⚠️ IMPORTANT: Use this reference or your payment will be delayed!',
+        screenshot_instruction:
+          language === 'nl-BE'
+            ? 'Stuur screenshot van betaling naar:'
+            : language === 'fr-BE'
+              ? "Envoyez une capture d'écran du paiement à:"
+              : 'Send payment screenshot to:',
+        credentials_timing:
+          language === 'nl-BE'
+            ? 'U ontvangt uw toegang binnen 10 minuten na bevestiging'
+            : language === 'fr-BE'
+              ? 'Vous recevrez vos accès dans les 10 minutes après confirmation'
+              : 'You will receive your credentials within 10 minutes after confirmation',
+        peak_time_notice:
+          language === 'nl-BE'
+            ? 'Tijdens piekuren kan dit tot 1 uur duren'
+            : language === 'fr-BE'
+              ? "Pendant les heures de pointe, cela peut prendre jusqu'à 1 heure"
+              : 'During peak times this may take up to 1 hour',
+
         confirmation_title:
           language === 'nl-BE'
             ? 'Bestelling Bevestigd!'
