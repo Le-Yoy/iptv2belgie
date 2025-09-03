@@ -46,7 +46,10 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: '/favicon.ico',
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: 'any' },
+    ],
     shortcut: '/favicon.ico',
     apple: '/favicon.ico',
   },
@@ -59,7 +62,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="nl" className="scroll-smooth">
-      <body className={`${inter.className} bg-slate-900 text-white antialiased`}>
+      <head>
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="alternate icon" href="/favicon.ico" />
+      </head>
+      <body
+        className={`${inter.className} bg-slate-900 text-white antialiased`}
+      >
         {children}
       </body>
     </html>
