@@ -98,7 +98,7 @@ export default function EmailCaptureModal({
           iban: 'IE14CITI99005171150683',
           bic: 'CITIIE2X',
           beneficiary: 'BOUTALEB LLC',
-          whatsapp_number: '+32465123456',
+          whatsapp_number: '+33773436514',
           telegram_handle: '@iptv2belgie_support',
 
           // Payment instruction texts
@@ -256,7 +256,7 @@ export default function EmailCaptureModal({
         iban: 'IE14CITI99005171150683',
         bic: 'CITIIE2X',
         beneficiary: 'BOUTALEB LLC',
-        whatsapp_number: '+32465123456',
+        whatsapp_number: '+33773436514',
         telegram_handle: '@iptv2belgie_support',
 
         // Payment instruction texts
@@ -387,7 +387,7 @@ export default function EmailCaptureModal({
       en: `Hello IPTV2Belgie! I just ordered:\n\n📦 Plan: ${plan.duration[language]}\n💰 Price: €${plan.price}\n✉️ Email: ${email}\n🔢 Customer #${customerNumber}\n\nI want to complete my payment and get access. Thank you!`,
     };
 
-    const whatsappUrl = `https://wa.me/32465123456?text=${encodeURIComponent(messages[language])}`;
+    const whatsappUrl = `https://wa.me/33773436514?text=${encodeURIComponent(messages[language])}`;
     window.open(whatsappUrl, '_blank');
 
     // Auto-close modal after user contacts support
