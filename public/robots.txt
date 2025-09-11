@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Allow: /blog/
+Disallow: /admin
+Disallow: /api/
+Disallow: /terms-of-service
+Disallow: /privacy-policy
+Disallow: /refund-policy
+
+Sitemap: https://iptv2belgie.be/sitemap.xml
