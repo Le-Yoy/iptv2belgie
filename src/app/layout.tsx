@@ -1,10 +1,25 @@
+// src/app/layout.tsx
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  preload: true,
+  fallback: [
+    'system-ui',
+    '-apple-system',
+    'BlinkMacSystemFont',
+    'Segoe UI',
+    'Roboto',
+    'Arial',
+    'sans-serif',
+  ],
+});
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://iptv2belgie.be'),
   title: 'IPTV2Belgie - 50,000+ Kanalen in 4K/8K | Premium IPTV Service',
   description:
     "België's #1 IPTV service met 50,000+ kanalen in 4K/8K kwaliteit. Netflix, Disney+, Sport & meer. Setup in 10 minuten. Geen contracten. Vanaf €6/maand.",
@@ -65,9 +80,17 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="alternate icon" href="/favicon.ico" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
       </head>
       <body
         className={`${inter.className} bg-slate-900 text-white antialiased`}
+        suppressHydrationWarning
       >
         {children}
       </body>

@@ -1,9 +1,14 @@
-// src/components/content/MovieCarousel.tsx - Dutch Variant
+// src/components/content/MovieCarousel.tsx - Performance Optimized
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
+import dynamic from 'next/dynamic';
+
+// Dynamically import Image component for lazy loading
+const Image = dynamic(() => import('next/image'), {
+  loading: () => <div className="w-full h-full bg-slate-700 animate-pulse" />,
+});
 
 interface MovieCarouselProps {
   language: 'nl-BE' | 'fr-BE' | 'en';
@@ -63,6 +68,47 @@ const movieSections = [
 export default function MovieCarousel({ language }: MovieCarouselProps) {
   const scrollRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const [activeSection, setActiveSection] = useState<string | null>(null);
+  const [shouldLoadContent, setShouldLoadContent] = useState(false);
+  const [visibleSections, setVisibleSections] = useState<Set<string>>(
+    new Set()
+  );
+
+  // Delay loading content by 5 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShouldLoadContent(true);
+      // Load first section immediately after delay
+      setVisibleSections(new Set([movieSections[0].id]));
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Progressive section loading
+  useEffect(() => {
+    if (!shouldLoadContent) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const sectionId = entry.target.getAttribute('data-section-id');
+            if (sectionId) {
+              setVisibleSections((prev) => new Set(prev).add(sectionId));
+            }
+          }
+        });
+      },
+      { rootMargin: '100px' }
+    );
+
+    const sections = document.querySelectorAll('[data-section-id]');
+    sections.forEach((section) => observer.observe(section));
+
+    return () => {
+      sections.forEach((section) => observer.unobserve(section));
+    };
+  }, [shouldLoadContent]);
 
   const scrollLeft = (sectionId: string) => {
     const container = scrollRefs.current[sectionId];
@@ -82,10 +128,38 @@ export default function MovieCarousel({ language }: MovieCarouselProps) {
     document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // Show loading placeholder while content loads
+  if (!shouldLoadContent) {
+    return (
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-900 to-slate-800">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="h-12 w-96 mx-auto bg-slate-800 animate-pulse rounded-lg mb-4"></div>
+            <div className="h-6 w-64 mx-auto bg-slate-800 animate-pulse rounded-lg"></div>
+          </div>
+          <div className="space-y-12">
+            {[1, 2, 3].map((i) => (
+              <div key={i}>
+                <div className="h-8 w-48 bg-slate-800 animate-pulse rounded-lg mb-6"></div>
+                <div className="flex gap-4 overflow-hidden">
+                  {[1, 2, 3, 4, 5, 6].map((j) => (
+                    <div
+                      key={j}
+                      className="flex-shrink-0 w-[200px] aspect-[2/3] bg-slate-800 animate-pulse rounded-xl"
+                    ></div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-900 to-slate-800">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -108,11 +182,11 @@ export default function MovieCarousel({ language }: MovieCarouselProps) {
           </p>
         </motion.div>
 
-        {/* Movie Sections */}
         <div className="space-y-12">
           {movieSections.map((section, sectionIndex) => (
             <motion.div
               key={section.id}
+              data-section-id={section.id}
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ delay: sectionIndex * 0.1 }}
@@ -120,7 +194,6 @@ export default function MovieCarousel({ language }: MovieCarouselProps) {
               onHoverStart={() => setActiveSection(section.id)}
               onHoverEnd={() => setActiveSection(null)}
             >
-              {/* Section Title with Navigation */}
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-2xl font-bold text-white flex items-center gap-3">
                   {section.title[language]}
@@ -135,7 +208,6 @@ export default function MovieCarousel({ language }: MovieCarouselProps) {
                   )}
                 </h3>
 
-                {/* Navigation Buttons */}
                 <div className="flex gap-2">
                   <button
                     onClick={() => scrollLeft(section.id)}
@@ -178,7 +250,6 @@ export default function MovieCarousel({ language }: MovieCarouselProps) {
                 </div>
               </div>
 
-              {/* Movie Carousel */}
               <div className="relative">
                 <div
                   ref={(el) => {
@@ -186,53 +257,59 @@ export default function MovieCarousel({ language }: MovieCarouselProps) {
                   }}
                   className="flex gap-4 overflow-x-auto scroll-smooth-touch no-scrollbar pb-4"
                 >
-                  {section.movies.map((movie, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: index * 0.05 }}
-                      viewport={{ once: true, amount: 0.3 }}
-                      whileHover={{ scale: 1.05, y: -10 }}
-                      className="flex-shrink-0 cursor-pointer group"
-                    >
-                      <div className="relative w-[160px] sm:w-[180px] lg:w-[200px] aspect-[2/3] rounded-xl overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-sky-500/20 transition-all duration-300">
-                        <Image
-                          src={movie}
-                          alt="Movie poster"
-                          fill
-                          className="object-cover"
-                          sizes="(max-width: 640px) 160px, (max-width: 1024px) 180px, 200px"
-                        />
-                        {/* Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <div className="absolute bottom-0 left-0 right-0 p-4">
-                            <button
-                              onClick={scrollToPricing}
-                              className="w-full py-2 bg-gradient-to-r from-sky-500 to-emerald-500 text-white font-semibold rounded-lg hover:shadow-lg transition-all"
-                            >
-                              {language === 'nl-BE'
-                                ? 'Bekijken'
-                                : language === 'fr-BE'
-                                  ? 'Regarder'
-                                  : 'Watch'}
-                            </button>
+                  {visibleSections.has(section.id)
+                    ? section.movies.map((movie, index) => (
+                        <motion.div
+                          key={index}
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: index * 0.05 }}
+                          viewport={{ once: true, amount: 0.3 }}
+                          whileHover={{ scale: 1.05, y: -10 }}
+                          className="flex-shrink-0 cursor-pointer group"
+                        >
+                          <div className="relative w-[160px] sm:w-[180px] lg:w-[200px] aspect-[2/3] rounded-xl overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-sky-500/20 transition-all duration-300">
+                            <Image
+                              src={movie}
+                              alt="Movie poster"
+                              fill
+                              className="object-cover"
+                              sizes="(max-width: 640px) 160px, (max-width: 1024px) 180px, 200px"
+                              loading="lazy"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                              <div className="absolute bottom-0 left-0 right-0 p-4">
+                                <button
+                                  onClick={scrollToPricing}
+                                  className="w-full py-2 bg-gradient-to-r from-sky-500 to-emerald-500 text-white font-semibold rounded-lg hover:shadow-lg transition-all"
+                                >
+                                  {language === 'nl-BE'
+                                    ? 'Bekijken'
+                                    : language === 'fr-BE'
+                                      ? 'Regarder'
+                                      : 'Watch'}
+                                </button>
+                              </div>
+                            </div>
+                            <div className="absolute top-2 right-2 px-2 py-1 bg-black/70 backdrop-blur-sm rounded text-xs font-bold text-white">
+                              4K
+                            </div>
                           </div>
-                        </div>
-                        {/* Quality Badge */}
-                        <div className="absolute top-2 right-2 px-2 py-1 bg-black/70 backdrop-blur-sm rounded text-xs font-bold text-white">
-                          4K
-                        </div>
-                      </div>
-                    </motion.div>
-                  ))}
+                        </motion.div>
+                      ))
+                    : // Loading placeholders while section loads
+                      [...Array(6)].map((_, index) => (
+                        <div
+                          key={index}
+                          className="flex-shrink-0 w-[160px] sm:w-[180px] lg:w-[200px] aspect-[2/3] bg-slate-800 animate-pulse rounded-xl"
+                        />
+                      ))}
                 </div>
               </div>
             </motion.div>
           ))}
         </div>
 
-        {/* CTA Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

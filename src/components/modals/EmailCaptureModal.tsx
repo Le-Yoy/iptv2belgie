@@ -1,12 +1,10 @@
-// src/components/modals/EmailCaptureModal.tsx - EmailJS Integration
+// src/components/modals/EmailCaptureModal.tsx - Performance Optimized
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import emailjs from '@emailjs/browser';
 
-// Initialize EmailJS
-emailjs.init('r-TxVcUofG77t4JyM');
+// Remove top-level import and initialization of EmailJS
 
 interface PricingPlan {
   id: string;
@@ -37,19 +35,51 @@ export default function EmailCaptureModal({
   const [phone, setPhone] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [customerNumber, setCustomerNumber] = useState(3278); // Default value
+  const [customerNumber, setCustomerNumber] = useState(3278);
+  const [emailJSLoaded, setEmailJSLoaded] = useState(false);
+  const [emailJSInstance, setEmailJSInstance] = useState<
+    typeof import('@emailjs/browser').default | null
+  >(null);
+
+  // Lazy load EmailJS after 10 seconds OR when modal opens
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+
+    const loadEmailJS = async () => {
+      if (!emailJSLoaded) {
+        try {
+          const emailjs = await import('@emailjs/browser');
+          emailjs.default.init('r-TxVcUofG77t4JyM');
+          setEmailJSInstance(emailjs.default);
+          setEmailJSLoaded(true);
+        } catch (error) {
+          console.error('Failed to load EmailJS:', error);
+        }
+      }
+    };
+
+    // Load immediately if modal is open
+    if (isOpen && !emailJSLoaded) {
+      loadEmailJS();
+    } else if (!emailJSLoaded) {
+      // Otherwise load after 10 seconds
+      timer = setTimeout(loadEmailJS, 10000);
+    }
+
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [isOpen, emailJSLoaded]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Extract device count from plan ID (accessible in try and catch)
     const deviceMatch =
       plan.id.match(/(\d+)-devices?/) || plan.id.match(/(\d)d$/);
     const deviceCount = deviceMatch ? parseInt(deviceMatch[1]) : 1;
 
     try {
-      // Call API to save order
       const response = await fetch('/api/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -67,10 +97,7 @@ export default function EmailCaptureModal({
       const result = await response.json();
 
       if (result.success) {
-        // Update customer number from database
         setCustomerNumber(result.data.customer_number);
-
-        // Store in localStorage as backup
         localStorage.setItem('user_email', email);
         localStorage.setItem(
           'customer_number',
@@ -81,9 +108,7 @@ export default function EmailCaptureModal({
           onEmailCapture(email);
         }
 
-        // Prepare email variables
         const emailVariables = {
-          // Common variables
           customer_number: result.data.customer_number,
           customer_email: email,
           customer_phone: phone || 'Not provided',
@@ -91,8 +116,6 @@ export default function EmailCaptureModal({
           plan_price: plan.price,
           device_count: deviceCount,
           language: language,
-
-          // Payment-specific variables
           payment_amount: plan.price,
           payment_reference: `BRENDT${result.data.customer_number}`,
           iban: 'IE14CITI99005171150683',
@@ -100,8 +123,6 @@ export default function EmailCaptureModal({
           beneficiary: 'BOUTALEB LLC',
           whatsapp_number: '+33773436514',
           telegram_handle: '@iptv2belgie_support',
-
-          // Payment instruction texts
           payment_instruction_title:
             language === 'nl-BE'
               ? 'Betalingsinstructies'
@@ -138,8 +159,6 @@ export default function EmailCaptureModal({
               : language === 'fr-BE'
                 ? "Pendant les heures de pointe, cela peut prendre jusqu'à 1 heure"
                 : 'During peak times this may take up to 1 hour',
-
-          // Language-specific variables (existing)
           confirmation_title:
             language === 'nl-BE'
               ? 'Bestelling Bevestigd!'
@@ -202,30 +221,29 @@ export default function EmailCaptureModal({
                 : 'Need help? Contact our support team',
         };
 
-        // Send confirmation email to customer using EmailJS
-        try {
-          await emailjs.send(
-            'service_v3y8dra',
-            'template_z7vmgeg',
-            emailVariables
-          );
-          console.log('Customer confirmation email sent successfully');
-        } catch (emailError) {
-          console.error('Customer email failed:', emailError);
-          // Don't block the order on email failure
-        }
+        // Only send emails if EmailJS is loaded
+        if (emailJSInstance) {
+          try {
+            await emailJSInstance.send(
+              'service_v3y8dra',
+              'template_z7vmgeg',
+              emailVariables
+            );
+            console.log('Customer confirmation email sent successfully');
+          } catch (emailError) {
+            console.error('Customer email failed:', emailError);
+          }
 
-        // Send admin notification using EmailJS
-        try {
-          await emailjs.send(
-            'service_v3y8dra',
-            'template_cndg3kw',
-            emailVariables
-          );
-          console.log('Admin notification sent successfully');
-        } catch (adminEmailError) {
-          console.error('Admin notification failed:', adminEmailError);
-          // Don't block on admin email failure
+          try {
+            await emailJSInstance.send(
+              'service_v3y8dra',
+              'template_cndg3kw',
+              emailVariables
+            );
+            console.log('Admin notification sent successfully');
+          } catch (adminEmailError) {
+            console.error('Admin notification failed:', adminEmailError);
+          }
         }
 
         setIsSuccess(true);
@@ -234,13 +252,11 @@ export default function EmailCaptureModal({
       }
     } catch (error) {
       console.error('Order submission error:', error);
-      // Fallback to localStorage if API fails
       const fallbackNumber = Math.floor(Math.random() * 9000) + 3000;
       setCustomerNumber(fallbackNumber);
       localStorage.setItem('user_email', email);
       localStorage.setItem('customer_number', fallbackNumber.toString());
 
-      // Still try to send emails with fallback data
       const fallbackVariables = {
         customer_number: fallbackNumber,
         customer_email: email,
@@ -249,8 +265,6 @@ export default function EmailCaptureModal({
         plan_price: plan.price,
         device_count: deviceCount,
         language: language,
-
-        // Payment-specific variables
         payment_amount: plan.price,
         payment_reference: `BRENDT${fallbackNumber}`,
         iban: 'IE14CITI99005171150683',
@@ -258,8 +272,6 @@ export default function EmailCaptureModal({
         beneficiary: 'BOUTALEB LLC',
         whatsapp_number: '+33773436514',
         telegram_handle: '@iptv2belgie_support',
-
-        // Payment instruction texts
         payment_instruction_title:
           language === 'nl-BE'
             ? 'Betalingsinstructies'
@@ -296,7 +308,6 @@ export default function EmailCaptureModal({
             : language === 'fr-BE'
               ? "Pendant les heures de pointe, cela peut prendre jusqu'à 1 heure"
               : 'During peak times this may take up to 1 hour',
-
         confirmation_title:
           language === 'nl-BE'
             ? 'Bestelling Bevestigd!'
@@ -359,19 +370,21 @@ export default function EmailCaptureModal({
               : 'Need help? Contact our support team',
       };
 
-      try {
-        await emailjs.send(
-          'service_v3y8dra',
-          'template_z7vmgeg',
-          fallbackVariables
-        );
-        await emailjs.send(
-          'service_v3y8dra',
-          'template_cndg3kw',
-          fallbackVariables
-        );
-      } catch (fallbackEmailError) {
-        console.error('Fallback email failed:', fallbackEmailError);
+      if (emailJSInstance) {
+        try {
+          await emailJSInstance.send(
+            'service_v3y8dra',
+            'template_z7vmgeg',
+            fallbackVariables
+          );
+          await emailJSInstance.send(
+            'service_v3y8dra',
+            'template_cndg3kw',
+            fallbackVariables
+          );
+        } catch (fallbackEmailError) {
+          console.error('Fallback email failed:', fallbackEmailError);
+        }
       }
 
       setIsSuccess(true);
@@ -390,7 +403,6 @@ export default function EmailCaptureModal({
     const whatsappUrl = `https://wa.me/33773436514?text=${encodeURIComponent(messages[language])}`;
     window.open(whatsappUrl, '_blank');
 
-    // Auto-close modal after user contacts support
     setTimeout(() => {
       onClose();
     }, 2000);
@@ -406,7 +418,6 @@ export default function EmailCaptureModal({
     const telegramUrl = `https://t.me/iptv2belgie_support?text=${encodeURIComponent(messages[language])}`;
     window.open(telegramUrl, '_blank');
 
-    // Auto-close modal after user contacts support
     setTimeout(() => {
       onClose();
     }, 2000);
@@ -491,6 +502,7 @@ export default function EmailCaptureModal({
 
   if (!isOpen) return null;
 
+  // Rest of the component remains the same (JSX)
   return (
     <AnimatePresence>
       <motion.div
@@ -507,7 +519,6 @@ export default function EmailCaptureModal({
           className="bg-slate-900 rounded-2xl p-6 md:p-8 max-w-md w-full border border-sky-500/20 shadow-2xl relative max-h-[90vh] overflow-y-auto"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Close button */}
           <button
             onClick={onClose}
             className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
@@ -529,7 +540,6 @@ export default function EmailCaptureModal({
 
           {!isSuccess ? (
             <>
-              {/* Form View */}
               <div className="text-center mb-6">
                 <h3 className="text-2xl font-bold text-white mb-2">
                   {text.title}
@@ -537,7 +547,6 @@ export default function EmailCaptureModal({
                 <p className="text-gray-400">{text.subtitle}</p>
               </div>
 
-              {/* Selected Plan Display */}
               <div className="bg-gradient-to-r from-sky-500/10 to-emerald-500/10 rounded-xl p-4 mb-6 border border-sky-500/20">
                 <div className="flex justify-between items-center">
                   <span className="text-white font-medium">
@@ -549,7 +558,6 @@ export default function EmailCaptureModal({
                 </div>
               </div>
 
-              {/* Form */}
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -587,7 +595,6 @@ export default function EmailCaptureModal({
                 </button>
               </form>
 
-              {/* Trust badges */}
               <div className="mt-6 space-y-2 text-center">
                 <p className="text-sm text-gray-400">{text.secure}</p>
                 <p className="text-sm text-gray-400">{text.guarantee}</p>
@@ -595,7 +602,6 @@ export default function EmailCaptureModal({
             </>
           ) : (
             <>
-              {/* Success View */}
               <div className="text-center mb-8">
                 <motion.div
                   initial={{ scale: 0 }}
@@ -610,7 +616,6 @@ export default function EmailCaptureModal({
                 </h3>
                 <p className="text-gray-400 mb-4">{text.successSubtitle}</p>
 
-                {/* Customer Info */}
                 <div className="bg-gradient-to-r from-sky-500/10 to-emerald-500/10 rounded-xl p-4 mb-6 border border-sky-500/20">
                   <div className="text-white font-medium mb-1">
                     {plan.duration[language]} - €{plan.price}
@@ -622,7 +627,6 @@ export default function EmailCaptureModal({
                 </div>
               </div>
 
-              {/* Timeline Indicator */}
               <div className="bg-slate-800/50 rounded-xl p-4 mb-6">
                 <div className="flex items-center justify-between text-sm">
                   <div className="flex flex-col items-center space-y-2">
@@ -652,7 +656,6 @@ export default function EmailCaptureModal({
                 </div>
               </div>
 
-              {/* Credentials Promise */}
               <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-4 mb-8">
                 <div className="flex items-start space-x-3">
                   <div className="text-emerald-400 text-xl mt-0.5">📧</div>
@@ -662,14 +665,12 @@ export default function EmailCaptureModal({
                 </div>
               </div>
 
-              {/* Payment Options */}
               <div className="mb-6">
                 <h4 className="text-white font-semibold mb-4 text-center">
                   {text.paymentTitle}
                 </h4>
 
                 <div className="space-y-3">
-                  {/* WhatsApp Option */}
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -690,7 +691,6 @@ export default function EmailCaptureModal({
                     </div>
                   </motion.button>
 
-                  {/* Telegram Option */}
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -713,12 +713,10 @@ export default function EmailCaptureModal({
                 </div>
               </div>
 
-              {/* Payment Methods Accepted */}
               <div className="text-center text-xs text-gray-500 mb-4">
                 <p>{text.paymentMethods}</p>
               </div>
 
-              {/* Trust indicators */}
               <div className="flex justify-center space-x-6 text-xs text-gray-500">
                 <span>🔒 Secure Payment</span>
                 <span>⚡ Instant Setup</span>

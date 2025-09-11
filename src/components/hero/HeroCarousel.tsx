@@ -1,13 +1,24 @@
+// src/components/hero/HeroCarousel.tsx - Performance Optimized
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 import EmailCapture from './EmailCapture';
 import type { CarouselSlide } from '@/lib/types';
 
+// Import hero images statically for priority loading
+import hero1 from '/public/assets/hero/hero1.jpg';
+import hero2 from '/public/assets/hero/hero2.jpg';
+import hero3 from '/public/assets/hero/hero3.jpg';
+import hero4 from '/public/assets/hero/hero4.jpg';
+import hero5 from '/public/assets/hero/hero5.jpg';
+
+const heroImages = [hero1, hero2, hero3, hero4, hero5];
+
 const slides: CarouselSlide[] = [
   {
-    id: "1",
+    id: '1',
     title: 'Every Match. Every League. In 4K.',
     subtitle:
       'Premier League, Champions League, Bundesliga, Ligue 1, and 500+ sports channels. Never miss a goal with our ultra-HD streaming quality.',
@@ -23,7 +34,7 @@ const slides: CarouselSlide[] = [
     ],
   },
   {
-    id: "2",
+    id: '2',
     title: 'Netflix, Disney+, HBO & More. One Price.',
     subtitle:
       'Access all premium streaming services with one subscription. Latest movies, exclusive series, and thousands of on-demand titles.',
@@ -39,7 +50,7 @@ const slides: CarouselSlide[] = [
     ],
   },
   {
-    id: "3",
+    id: '3',
     title: 'Safe Content for Every Family Member',
     subtitle:
       'Kids channels, educational content, family movies, and parental controls. Entertainment the whole family can enjoy together.',
@@ -70,6 +81,15 @@ const slides: CarouselSlide[] = [
       { icon: '🇧🇪', name: 'VRT' },
     ],
   },
+  {
+    id: 5,
+    title: 'Start Your Premium Experience',
+    subtitle:
+      'Join thousands of satisfied customers enjoying unlimited entertainment.',
+    badge: '🚀 GET STARTED',
+    duration: 5000,
+    channels: [],
+  },
 ];
 
 export default function HeroCarousel() {
@@ -77,8 +97,31 @@ export default function HeroCarousel() {
   const [showEmailCapture, setShowEmailCapture] = useState(false);
   const [autoPlay, setAutoPlay] = useState(true);
   const [engagementTime, setEngagementTime] = useState(0);
+  const [imagesPreloaded, setImagesPreloaded] = useState(false);
 
-  // Auto-advance carousel
+  // Preload hero images
+  useEffect(() => {
+    const preloadImages = async () => {
+      const promises = heroImages.slice(1).map((src) => {
+        return new Promise((resolve, reject) => {
+          const img = new window.Image();
+          img.src = typeof src === 'string' ? src : src.src;
+          img.onload = resolve;
+          img.onerror = reject;
+        });
+      });
+
+      try {
+        await Promise.all(promises);
+        setImagesPreloaded(true);
+      } catch (error) {
+        console.error('Failed to preload images:', error);
+      }
+    };
+
+    preloadImages();
+  }, []);
+
   useEffect(() => {
     if (!autoPlay || showEmailCapture) return;
 
@@ -94,7 +137,6 @@ export default function HeroCarousel() {
     return () => clearTimeout(timer);
   }, [currentSlide, autoPlay, showEmailCapture]);
 
-  // Engagement tracking
   useEffect(() => {
     const timer = setInterval(() => {
       setEngagementTime((prev) => prev + 1);
@@ -103,7 +145,6 @@ export default function HeroCarousel() {
     return () => clearInterval(timer);
   }, []);
 
-  // Auto-show email capture after 30 seconds
   useEffect(() => {
     if (engagementTime >= 30 && !showEmailCapture) {
       setShowEmailCapture(true);
@@ -111,7 +152,6 @@ export default function HeroCarousel() {
     }
   }, [engagementTime, showEmailCapture]);
 
-  // Exit intent detection
   useEffect(() => {
     const handleMouseLeave = (e: MouseEvent) => {
       if (e.clientY <= 0 && !showEmailCapture) {
@@ -125,7 +165,7 @@ export default function HeroCarousel() {
   }, [showEmailCapture]);
 
   const goToSlide = useCallback((index: number) => {
-    setAutoPlay(false); // Stop autoplay when user manually navigates
+    setAutoPlay(false);
 
     if (index === slides.length) {
       setShowEmailCapture(true);
@@ -165,12 +205,22 @@ export default function HeroCarousel() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      {/* Animated Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-purple-500/5 to-teal-500/10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.1),transparent)] animate-pulse" />
+      {/* Optimized background with static first image */}
+      <div className="absolute inset-0">
+        <Image
+          src={heroImages[0]}
+          alt="Hero background"
+          fill
+          priority
+          quality={90}
+          className="object-cover opacity-20"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-purple-500/5 to-teal-500/10">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.1),transparent)]" />
+        </div>
       </div>
 
-      {/* Main Content */}
       <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20">
         <AnimatePresence mode="wait">
           {!showEmailCapture ? (
@@ -182,7 +232,6 @@ export default function HeroCarousel() {
               transition={{ duration: 0.8, ease: 'easeInOut' }}
               className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center"
             >
-              {/* Text Content */}
               <div className="text-center lg:text-left order-2 lg:order-1">
                 <motion.div
                   initial={{ y: 30, opacity: 0 }}
@@ -223,7 +272,6 @@ export default function HeroCarousel() {
                 </motion.button>
               </div>
 
-              {/* Visual Content */}
               <div className="order-1 lg:order-2">
                 <motion.div
                   initial={{ y: 30, opacity: 0, scale: 0.9 }}
@@ -231,35 +279,45 @@ export default function HeroCarousel() {
                   transition={{ delay: 0.4, duration: 0.8 }}
                   className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 sm:p-8"
                 >
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
-                    {slides[currentSlide]?.channels.map((channel, index) => (
-                      <motion.div
-                        key={channel.name}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.6 + index * 0.1, duration: 0.4 }}
-                        className="bg-white/5 backdrop-blur-md rounded-xl p-4 text-center hover:bg-white/10 transition-all duration-300 cursor-pointer group"
-                      >
-                        <div className="text-2xl sm:text-3xl mb-2 group-hover:scale-110 transition-transform duration-300">
-                          {channel.icon}
+                  {slides[currentSlide]?.channels &&
+                    slides[currentSlide].channels.length > 0 && (
+                      <>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
+                          {slides[currentSlide].channels.map(
+                            (channel, index) => (
+                              <motion.div
+                                key={channel.name}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{
+                                  delay: 0.6 + index * 0.1,
+                                  duration: 0.4,
+                                }}
+                                className="bg-white/5 backdrop-blur-md rounded-xl p-4 text-center hover:bg-white/10 transition-all duration-300 cursor-pointer group"
+                              >
+                                <div className="text-2xl sm:text-3xl mb-2 group-hover:scale-110 transition-transform duration-300">
+                                  {channel.icon}
+                                </div>
+                                <div className="text-xs sm:text-sm text-slate-300 font-medium">
+                                  {channel.name}
+                                </div>
+                              </motion.div>
+                            )
+                          )}
                         </div>
-                        <div className="text-xs sm:text-sm text-slate-300 font-medium">
-                          {channel.name}
+                        <div className="text-center text-slate-400 text-sm">
+                          +{' '}
+                          {currentSlide === 0
+                            ? '500 more sports channels'
+                            : currentSlide === 1
+                              ? '2000 VOD channels & series'
+                              : currentSlide === 2
+                                ? 'Parental controls included'
+                                : '1000 international channels'}{' '}
+                          in 4K/8K
                         </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                  <div className="text-center text-slate-400 text-sm">
-                    +{' '}
-                    {currentSlide === 0
-                      ? '500 more sports channels'
-                      : currentSlide === 1
-                        ? '2000 VOD channels & series'
-                        : currentSlide === 2
-                          ? 'Parental controls included'
-                          : '1000 international channels'}{' '}
-                    in 4K/8K
-                  </div>
+                      </>
+                    )}
                 </motion.div>
               </div>
             </motion.div>
@@ -277,28 +335,36 @@ export default function HeroCarousel() {
           )}
         </AnimatePresence>
 
-        {/* Carousel Indicators */}
+        {/* Fixed Carousel Indicators with proper touch targets */}
         <div
-          className={`absolute left-1/2 transform -translate-x-1/2 flex gap-3 z-30 ${showEmailCapture ? 'bottom-4' : 'bottom-2 sm:bottom-4'}`}
+          className={`absolute left-1/2 transform -translate-x-1/2 flex gap-3 z-30 ${showEmailCapture ? 'bottom-8' : 'bottom-8 sm:bottom-12'}`}
         >
-          {[...slides, { id: 5 }].map((_, index) => (
+          {[...slides].map((_, index) => (
             <button
               key={index}
               onClick={(e) => handleIndicatorClick(e, index)}
               type="button"
-              className={`h-2 rounded-full transition-all duration-300 cursor-pointer select-none focus:outline-none focus:ring-2 focus:ring-indigo-400/50 ${
+              className={`min-h-[44px] min-w-[44px] p-0 rounded-full transition-all duration-300 cursor-pointer select-none focus:outline-none focus:ring-2 focus:ring-indigo-400/50 flex items-center justify-center ${
                 (index === currentSlide && !showEmailCapture) ||
-                (index === slides.length && showEmailCapture)
-                  ? 'w-12 bg-indigo-500 shadow-lg shadow-indigo-500/50'
-                  : 'w-6 bg-white/30 hover:bg-white/50 hover:w-8'
+                (index === slides.length - 1 && showEmailCapture)
+                  ? 'bg-indigo-500 shadow-lg shadow-indigo-500/50'
+                  : 'bg-white/30 hover:bg-white/50'
               }`}
               aria-label={`Go to slide ${index + 1}`}
-            />
+            >
+              <span
+                className={`block rounded-full transition-all duration-300 ${
+                  (index === currentSlide && !showEmailCapture) ||
+                  (index === slides.length - 1 && showEmailCapture)
+                    ? 'w-3 h-3 bg-white'
+                    : 'w-2 h-2 bg-white/70'
+                }`}
+              />
+            </button>
           ))}
         </div>
       </div>
 
-      {/* Mobile Swipe Support */}
       <div className="absolute inset-0 touch-manipulation pointer-events-none" />
     </section>
   );
