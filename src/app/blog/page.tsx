@@ -27,6 +27,18 @@ export default function BlogIndex() {
             <span className="text-sky-400 text-sm">Lire l&apos;article →</span>
           </article>
         </Link>
+        <Link href="/blog/iptv-belgie-2025-complete-gids" className="group">
+          <article className="bg-slate-800 rounded-xl p-6 border border-slate-700 hover:border-sky-500/50 transition-all">
+            <h2 className="text-xl font-semibold mb-3 text-white group-hover:text-sky-400 transition-colors">
+              IPTV België 2025: Complete Gids
+            </h2>
+            <p className="text-gray-300 mb-4">
+              Alles weten over IPTV in België: legaliteit, boetes, en hoe de
+              beste service kiezen in volledige veiligheid.
+            </p>
+            <span className="text-sky-400 text-sm">Lees het artikel →</span>
+          </article>
+        </Link>
       </div>
     </div>
   );
