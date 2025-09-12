@@ -21,10 +21,10 @@ export default function BlogIndex() {
               IPTV Belgique 2025: Guide Complet
             </h2>
             <p className="text-gray-300 mb-4">
-              Tout savoir sur l'IPTV en Belgique: légalité, amendes, et comment
-              choisir le meilleur service en toute sécurité.
+              Tout savoir sur l&apos;IPTV en Belgique: légalité, amendes, et
+              comment choisir le meilleur service en toute sécurité.
             </p>
-            <span className="text-sky-400 text-sm">Lire l'article →</span>
+            <span className="text-sky-400 text-sm">Lire l&apos;article →</span>
           </article>
         </Link>
       </div>
