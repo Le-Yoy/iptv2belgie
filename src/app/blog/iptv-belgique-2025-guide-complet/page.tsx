@@ -159,7 +159,7 @@ export default function IPTVBelgiqueGuide() {
 
         <div className="relative mb-12 rounded-2xl overflow-hidden">
           <Image
-            src="/assets/hero section/living cozy room.png"
+            src="/assets/hero%20section%20/living%20cozy%20room.png"
             alt="Famille belge regardant l'IPTV dans un salon confortable"
             width={800}
             height={400}
