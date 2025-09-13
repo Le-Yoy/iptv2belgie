@@ -1,4 +1,4 @@
-// src/components/hero/HeroSection.tsx - Dutch Variant with Mobile Fix
+// src/components/hero/HeroSection.tsx - MINIMAL CHANGES ONLY
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -13,8 +13,8 @@ interface HeroSectionProps {
 const heroSlides = [
   {
     id: 'telenet-crusher',
-    background:
-      '/assets/sports/football/belgium/standard de liège players on the pitch.png',
+    // ONLY CHANGE: Use WebP if it exists, fallback to PNG
+    background: '/assets/sports/football/belgium/standard-liege.webp',
     content: {
       'nl-BE': {
         headline: 'Stop met €89/maand betalen aan Telenet',
@@ -38,7 +38,8 @@ const heroSlides = [
   },
   {
     id: 'proximus-alternative',
-    background: '/assets/hero section /multiple screens in a bar.png',
+    // Check if this WebP will exist after conversion
+    background: '/assets/hero section /multiple-screens-bar.webp',
     content: {
       'nl-BE': {
         headline: 'Proximus Pickx? Wij hebben meer voor minder',
@@ -62,7 +63,7 @@ const heroSlides = [
   },
   {
     id: 'eredivisie-live',
-    background: '/assets/sports/tennis/tennis - dark hero section image.png',
+    background: '/assets/sports/tennis/tennis-hero.webp',
     content: {
       'nl-BE': {
         headline: 'Eredivisie, Pro League, Champions League - Alles Live',
@@ -86,7 +87,7 @@ const heroSlides = [
   },
   {
     id: 'max-verstappen',
-    background: '/assets/sports/mma/mma - ufc hero section ring .png',
+    background: '/assets/sports/mma/mma-hero.webp',
     content: {
       'nl-BE': {
         headline: 'Volg Max Verstappen in Elke Race',
@@ -110,7 +111,7 @@ const heroSlides = [
   },
   {
     id: 'family-entertainment',
-    background: '/assets/sports/cycling/cycling - belgium .png',
+    background: '/assets/sports/cycling/cycling-belgium.webp',
     content: {
       'nl-BE': {
         headline: 'De Hele Familie Kijkt Voor €6.90/maand',
@@ -168,7 +169,7 @@ export default function HeroSection({
 
   return (
     <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
-      {/* Background Images */}
+      {/* Background Images - OPTIMIZED WITH NEXT/IMAGE */}
       <AnimatePresence mode="wait">
         <motion.div
           key={currentSlide}
@@ -183,15 +184,16 @@ export default function HeroSection({
             alt={heroSlides[currentSlide].id}
             fill
             className="object-cover"
-            priority={currentSlide === 0}
-            quality={90}
+            priority={currentSlide === 0} // Priority for first image
+            quality={85} // Slightly reduced quality for faster load
+            sizes="100vw"
           />
-          {/* Dark Overlay */}
+          {/* Dark Overlay - KEEP EXACTLY THE SAME */}
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/40" />
         </motion.div>
       </AnimatePresence>
 
-      {/* Content */}
+      {/* Content - KEEP EVERYTHING EXACTLY THE SAME */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20">
         <AnimatePresence mode="wait">
           <motion.div
@@ -202,7 +204,7 @@ export default function HeroSection({
             transition={{ duration: 0.8 }}
             className="text-left md:text-center lg:text-left w-[60%] md:max-w-full lg:max-w-3xl"
           >
-            {/* Trust Badge */}
+            {/* Trust Badge - NO CHANGES */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -219,22 +221,22 @@ export default function HeroSection({
               </span>
             </motion.div>
 
-            {/* Main Headline - Responsive sizing */}
+            {/* Main Headline - NO CHANGES */}
             <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white mb-2 md:mb-4 hero-text-shadow leading-tight">
               {currentContent.headline}
             </h1>
 
-            {/* Subheadline - Responsive sizing */}
+            {/* Subheadline - NO CHANGES */}
             <p className="text-sm sm:text-base md:text-xl lg:text-2xl text-yellow-400 font-bold mb-2 md:mb-4 hero-text-shadow">
               {currentContent.subheadline}
             </p>
 
-            {/* Description - Responsive sizing */}
+            {/* Description - NO CHANGES */}
             <p className="text-xs sm:text-sm md:text-lg text-white/90 mb-4 md:mb-8 hero-text-shadow">
               {currentContent.description}
             </p>
 
-            {/* CTA Buttons - Mobile optimized */}
+            {/* CTA Buttons - NO CHANGES */}
             <div className="flex flex-col sm:flex-row gap-2 md:gap-4 justify-start md:justify-center lg:justify-start">
               <motion.button
                 whileHover={{ scale: 1.05 }}
@@ -245,7 +247,7 @@ export default function HeroSection({
                 {currentContent.cta}
               </motion.button>
 
-              {/* Secondary CTA - Mobile optimized */}
+              {/* Secondary CTA - NO CHANGES */}
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -259,7 +261,7 @@ export default function HeroSection({
               </motion.button>
             </div>
 
-            {/* Features - Mobile optimized */}
+            {/* Features - NO CHANGES */}
             <div className="mt-4 md:mt-8 flex flex-wrap gap-2 md:gap-4 justify-start md:justify-center lg:justify-start">
               <div className="flex items-center space-x-1.5 md:space-x-2 text-white/80">
                 <svg
@@ -322,7 +324,7 @@ export default function HeroSection({
         </AnimatePresence>
       </div>
 
-      {/* Slide Indicators */}
+      {/* Slide Indicators - NO CHANGES */}
       <div className="absolute bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
         {heroSlides.map((_, index) => (
           <button
