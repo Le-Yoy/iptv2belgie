@@ -1,10 +1,20 @@
 User-agent: *
 Allow: /
 Allow: /blog/
+
+# Block admin and API routes
 Disallow: /admin
 Disallow: /api/
-Disallow: /terms-of-service
-Disallow: /privacy-policy
-Disallow: /refund-policy
+
+# Block empty blog pages you don't want indexed
+Disallow: /blog/iptv-belgium-2025-complete-guide
+Disallow: /blog/jupiler-pro-league-kijken-buitenland
+Disallow: /blog/vtm-play-canvas-vrt-buitenland
+Disallow: /blog/proximus-tv-alternatief-2025
+Disallow: /blog/telenet-opzeggen-overstappen-iptv
+Disallow: /blog/formule-1-streaming-belgie-2025
+
+# Block static files that shouldn't be indexed
+Disallow: /_next/static/
 
 Sitemap: https://iptv2belgie.be/sitemap.xml

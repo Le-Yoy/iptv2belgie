@@ -26,6 +26,10 @@ export const metadata: Metadata = {
   keywords:
     'IPTV, IPTV België, IPTV Belgie, IPTV Netherlands, IPTV France, 4K streaming, sports streaming, Netflix, Disney+, Proximus, Telenet',
   authors: [{ name: 'IPTV2Belgie' }],
+  // ADD THIS TO FIX CANONICAL ISSUES
+  alternates: {
+    canonical: 'https://iptv2belgie.be',
+  },
   openGraph: {
     title: 'IPTV2Belgie - Premium IPTV Service',
     description:
