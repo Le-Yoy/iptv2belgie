@@ -3,60 +3,25 @@
   
   <!-- Homepage -->
   <url>
-    <loc>https://iptv2belgie.be</loc>
-    <lastmod>2025-01-01</lastmod>
+    <loc>https://www.iptv2belgie.be</loc>
+    <lastmod>2025-01-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
-  <!-- Blog Pages - Strategic for Belgium Market -->
+  <!-- Blog Pages - French (Higher Priority due to search volume) -->
   <url>
-    <loc>https://iptv2belgie.be/blog/proximus-tv-alternatief-2025</loc>
-    <lastmod>2025-01-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
-    <loc>https://iptv2belgie.be/blog/telenet-opzeggen-overstappen-iptv</loc>
-    <lastmod>2025-01-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
-    <loc>https://iptv2belgie.be/blog/jupiler-pro-league-kijken-buitenland</loc>
-    <lastmod>2025-01-01</lastmod>
+    <loc>https://www.iptv2belgie.be/blog/iptv-belgique-2025-guide-complet</loc>
+    <lastmod>2025-01-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-  
-  <url>
-    <loc>https://iptv2belgie.be/blog/formule-1-streaming-belgie-2025</loc>
-    <lastmod>2025-01-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
-    <loc>https://iptv2belgie.be/blog/vtm-play-canvas-vrt-buitenland</loc>
-    <lastmod>2025-01-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-  <loc>https://www.iptv2belgie.be/blog/iptv-belgique-2025-guide-complet</loc>
-  <lastmod>2025-01-15</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.8</priority>
-</url>
 
-<url>
-  <loc>https://www.iptv2belgie.be/blog/iptv-belgie-2025-complete-gids</loc>
-  <lastmod>2025-01-15</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.8</priority>
-</url>
+  <url>
+    <loc>https://www.iptv2belgie.be/blog/iptv-belgie-2025-complete-gids</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
 
 </urlset>
