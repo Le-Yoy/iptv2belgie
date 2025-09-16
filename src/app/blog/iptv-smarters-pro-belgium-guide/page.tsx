@@ -22,46 +22,9 @@ export const metadata: Metadata = {
   },
 };
 
-// FAQ Schema for rich snippets
-const faqSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: [
-    {
-      '@type': 'Question',
-      name: 'What is IPTV Smarters Pro?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: "IPTV Smarters Pro is a video streaming player that allows you to watch Live TV, VOD, Series, and TV Catchup on your Smart TV, Android devices, iOS, and computers. It's the most popular IPTV player in Belgium with over 4,400 monthly searches.",
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Is IPTV Smarters Pro free?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'The IPTV Smarters Pro app itself is free to download. However, you need an IPTV subscription from a provider like IPTV2Belgie to access content. We offer subscriptions from €6.90/month.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'How to install IPTV Smarters Pro APK?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: "Download the APK from the official website, enable 'Unknown Sources' in your device settings, locate the downloaded APK file, tap to install, and follow the on-screen instructions. The process takes less than 5 minutes.",
-      },
-    },
-  ],
-};
-
 export default function IPTVSmartersProGuide() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-
       <article className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800">
         {/* Hero Section */}
         <div className="relative py-16 px-4 sm:px-6 lg:px-8">
