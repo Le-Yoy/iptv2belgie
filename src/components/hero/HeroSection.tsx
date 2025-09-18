@@ -324,19 +324,26 @@ export default function HeroSection({
         </AnimatePresence>
       </div>
 
-      {/* Slide Indicators - NO CHANGES */}
-      <div className="absolute bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
+      {/* Slide Indicators - FIXED with proper touch targets and accessibility */}
+      <div className="absolute bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2 flex items-center gap-3 z-20 p-2">
         {heroSlides.map((_, index) => (
           <button
             key={index}
             onClick={() => handleIndicatorClick(index)}
-            className={`h-1.5 md:h-2 transition-all duration-300 rounded-full ${
-              index === currentSlide
-                ? 'w-6 md:w-8 bg-yellow-400'
-                : 'w-1.5 md:w-2 bg-white/40 hover:bg-white/60'
+            className={`min-w-[48px] min-h-[48px] flex items-center justify-center transition-all duration-300 ${
+              index === currentSlide ? '' : ''
             }`}
             aria-label={`Go to slide ${index + 1}`}
-          />
+            aria-current={index === currentSlide ? 'true' : 'false'}
+          >
+            <span
+              className={`block transition-all duration-300 rounded-full ${
+                index === currentSlide
+                  ? 'w-6 md:w-8 h-1.5 md:h-2 bg-yellow-400'
+                  : 'w-1.5 md:w-2 h-1.5 md:h-2 bg-white/40 hover:bg-white/60'
+              }`}
+            />
+          </button>
         ))}
       </div>
     </section>

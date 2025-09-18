@@ -2,7 +2,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 
 interface HeaderProps {
@@ -127,10 +126,25 @@ export default function Header({ currentLang, onLanguageChange }: HeaderProps) {
 
           {/* Mobile Menu Button */}
           <div className="lg:hidden flex items-center space-x-4">
-            {/* Mobile Language Toggle */}
+            {/* Mobile Language Toggle - FIXED with label and aria-label */}
+            <label htmlFor="mobile-language-select" className="sr-only">
+              {currentLang === 'fr-BE'
+                ? 'Choisir la langue'
+                : currentLang === 'nl-BE'
+                  ? 'Kies taal'
+                  : 'Select language'}
+            </label>
             <select
+              id="mobile-language-select"
               value={currentLang}
               onChange={(e) => onLanguageChange(e.target.value as any)}
+              aria-label={
+                currentLang === 'fr-BE'
+                  ? 'Choisir la langue'
+                  : currentLang === 'nl-BE'
+                    ? 'Kies taal'
+                    : 'Select language'
+              }
               className="bg-white/10 text-white border border-white/20 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-yellow-400"
             >
               {languages.map((lang) => (
@@ -144,10 +158,24 @@ export default function Header({ currentLang, onLanguageChange }: HeaderProps) {
               ))}
             </select>
 
-            {/* Mobile Menu Toggle */}
+            {/* Mobile Menu Toggle - FIXED with aria-label and min touch target */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-white p-2 touch-target"
+              className="text-white p-2 touch-target min-w-[48px] min-h-[48px] flex items-center justify-center"
+              aria-label={
+                isMobileMenuOpen
+                  ? currentLang === 'fr-BE'
+                    ? 'Fermer le menu'
+                    : currentLang === 'nl-BE'
+                      ? 'Menu sluiten'
+                      : 'Close menu'
+                  : currentLang === 'fr-BE'
+                    ? 'Ouvrir le menu'
+                    : currentLang === 'nl-BE'
+                      ? 'Menu openen'
+                      : 'Open menu'
+              }
+              aria-expanded={isMobileMenuOpen}
             >
               <svg
                 className="w-6 h-6"
@@ -157,6 +185,7 @@ export default function Header({ currentLang, onLanguageChange }: HeaderProps) {
                 strokeWidth="2"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
+                aria-hidden="true"
               >
                 {isMobileMenuOpen ? (
                   <path d="M6 18L18 6M6 6l12 12" />
