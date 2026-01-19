@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 interface HeaderProps {
   currentLang: 'fr-BE' | 'nl-BE' | 'en';
@@ -84,12 +85,12 @@ export default function Header({ currentLang, onLanguageChange }: HeaderProps) {
                   ? 'Kanalen'
                   : 'Channels'}
             </button>
-            <button
-              onClick={() => scrollToSection('sports')}
+            <Link
+              href="/blog"
               className="text-white/80 hover:text-white transition-colors font-medium belgian-accent"
             >
-              Sports
-            </button>
+              Blog
+            </Link>
 
             {/* Language Switcher */}
             <div className="flex items-center space-x-1 bg-white/10 rounded-lg p-1">
@@ -231,15 +232,15 @@ export default function Header({ currentLang, onLanguageChange }: HeaderProps) {
                     ? 'Kanalen'
                     : 'Channels'}
               </button>
-              <button
+              <Link
+                href="/blog"
                 onClick={() => {
-                  scrollToSection('sports');
                   setIsMobileMenuOpen(false);
                 }}
                 className="text-white/80 hover:text-white transition-colors font-medium text-left"
               >
-                Sports
-              </button>
+                Blog
+              </Link>
               <button
                 onClick={() => {
                   scrollToSection('pricing');

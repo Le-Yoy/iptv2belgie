@@ -1,4 +1,3 @@
-// src/app/layout.tsx
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
@@ -20,37 +19,35 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.iptv2belgie.be'),
-  // OPTIMIZED: Added "IPTV Belgique" (3,600 volume) and addressed "amende" concern
   title: 'IPTV Belgique & België €6.90 | Alternative Proximus Telenet',
-  // OPTIMIZED: Front-loaded with highest volume keywords, addresses legal concerns
   description:
-    'IPTV Belgique et IPTV België sans amende. Alternative à Proximus TV, Telenet, streaming légal. 50.000+ chaînes 4K/8K, Netflix Disney+ inclus. €6.90/mois.',
-  // OPTIMIZED: Removed redundant keywords, added high-volume terms from SEMrush
+    'IPTV Belgique et België. Alternative à Proximus TV, Telenet. 50.000+ chaînes 4K/8K, Netflix Disney+ inclus. €6.90/mois. Économisez 900€/an.',
   keywords:
-    'iptv belgique, iptv belgie, iptv belgique amende, abonnement iptv belgique, iptv belgique legal, proximus tv alternatief, telenet opzeggen, streaming belgique, iptv abonnement, proximus streaming',
+    'iptv belgique, iptv belgie, abonnement iptv belgique, proximus alternative, telenet alternatief, streaming belgique',
   authors: [{ name: 'IPTV2Belgie' }],
   alternates: {
     canonical: 'https://www.iptv2belgie.be',
     languages: {
       'fr-BE': 'https://www.iptv2belgie.be',
       'nl-BE': 'https://www.iptv2belgie.be',
+      en: 'https://www.iptv2belgie.be',
     },
   },
   openGraph: {
     title: 'IPTV Belgique - Alternative Proximus & Telenet €6.90',
     description:
-      'IPTV légal en Belgique. 50.000+ chaînes, tous les sports, Netflix inclus. Installation 10 minutes.',
+      '50.000+ chaînes, tous les sports, Netflix inclus. Installation 10 minutes. Économisez 900€/an.',
     url: 'https://www.iptv2belgie.be',
     siteName: 'IPTV2Belgie',
     images: [
       {
-        url: '/og-image.jpg',
+        url: 'https://www.iptv2belgie.be/og-image.jpg',
         width: 1200,
         height: 630,
         alt: 'IPTV Belgique - Service Premium',
       },
     ],
-    locale: 'fr_BE', // Changed to French for higher volume
+    locale: 'fr_BE',
     alternateLocale: ['nl_BE', 'en_US'],
     type: 'website',
   },
@@ -59,7 +56,7 @@ export const metadata: Metadata = {
     title: 'IPTV Belgique €6.90 - 50.000+ Chaînes 4K',
     description:
       'Alternative Proximus et Telenet. Installation directe, sans contrat.',
-    images: ['/og-image.jpg'],
+    images: ['https://www.iptv2belgie.be/og-image.jpg'],
   },
   robots: {
     index: true,
@@ -87,81 +84,73 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // Enhanced Schema with FAQ for "amende" concerns
-  const jsonLdSchema = {
+  const organizationSchema = {
     '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'SoftwareApplication',
-        name: 'IPTV2Belgie Player',
-        operatingSystem:
-          'Android, iOS, Windows, MacOS, Smart TV, Fire Stick, Android Box',
-        applicationCategory: 'EntertainmentApplication',
-        offers: {
-          '@type': 'AggregateOffer',
-          lowPrice: '6.90',
-          highPrice: '16.90',
-          priceCurrency: 'EUR',
-          offerCount: '4',
-          availability: 'https://schema.org/InStock',
-          priceValidUntil: '2025-12-31',
-          seller: {
-            '@type': 'Organization',
-            name: 'IPTV2Belgie',
-          },
-        },
-        aggregateRating: {
-          '@type': 'AggregateRating',
-          ratingValue: '4.8',
-          reviewCount: '3427',
-          bestRating: '5',
-          worstRating: '1',
-        },
-        description:
-          'IPTV Belgique et België. Stream 50.000+ chaînes et 100.000+ VOD en 4K/8K.',
-        screenshot: 'https://www.iptv2belgie.be/og-image.jpg',
-        featureList: [
-          '50.000+ Chaînes Live',
-          '100.000+ Films & Séries',
-          'Qualité 4K/8K',
-          'Sans Buffering',
-          'Support 24/7',
-          'Tous les appareils',
-        ],
-        softwareVersion: '3.0',
-        datePublished: '2021-01-01',
-        dateModified: '2025-01-15',
+    '@type': 'Organization',
+    '@id': 'https://www.iptv2belgie.be/#organization',
+    name: 'IPTV2Belgie',
+    url: 'https://www.iptv2belgie.be',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://www.iptv2belgie.be/favicon.svg',
+      width: 512,
+      height: 512,
+    },
+    image: 'https://www.iptv2belgie.be/og-image.jpg',
+    description:
+      'Premium IPTV service in Belgium. Alternative to Proximus and Telenet.',
+    address: {
+      '@type': 'PostalAddress',
+      addressCountry: 'BE',
+      addressLocality: 'Brussels',
+    },
+    sameAs: ['https://t.me/iptv2belgie', 'https://wa.me/32123456789'],
+  };
+
+  const softwareApplicationSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'IPTV2Belgie Player',
+    operatingSystem:
+      'Android, iOS, Windows, MacOS, Smart TV, Fire Stick, Android Box',
+    applicationCategory: 'EntertainmentApplication',
+    offers: {
+      '@type': 'AggregateOffer',
+      lowPrice: '6.90',
+      highPrice: '16.90',
+      priceCurrency: 'EUR',
+      offerCount: '4',
+      availability: 'https://schema.org/InStock',
+      priceValidUntil: '2025-12-31',
+      seller: {
+        '@type': 'Organization',
+        '@id': 'https://www.iptv2belgie.be/#organization',
       },
-      {
-        '@type': 'FAQPage',
-        mainEntity: [
-          {
-            '@type': 'Question',
-            name: 'IPTV Belgique amende - est-ce légal?',
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: 'Notre service IPTV respecte les normes européennes de streaming. Nous opérons comme alternative légale à Proximus et Telenet.',
-            },
-          },
-          {
-            '@type': 'Question',
-            name: 'Combien coûte IPTV Belgique?',
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: "IPTV Belgique commence à €6.90 par mois pour 1 appareil, jusqu'à €16.90 pour 5 appareils. Moins cher que Proximus TV et Telenet.",
-            },
-          },
-          {
-            '@type': 'Question',
-            name: 'Comment remplacer Proximus TV?',
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: 'IPTV2Belgie remplace complètement Proximus TV avec plus de chaînes pour 90% moins cher. Installation en 10 minutes.',
-            },
-          },
-        ],
-      },
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.8',
+      reviewCount: '3427',
+      bestRating: '5',
+      worstRating: '1',
+    },
+    description: 'Stream 50.000+ channels and 100.000+ VOD in 4K/8K quality.',
+    screenshot: 'https://www.iptv2belgie.be/og-image.jpg',
+    featureList: [
+      '50.000+ Live Channels',
+      '100.000+ Movies & Series',
+      '4K/8K Quality',
+      'No Buffering',
+      '24/7 Support',
+      'All Devices',
     ],
+    softwareVersion: '3.0',
+    datePublished: '2021-01-01',
+    dateModified: '2025-01-15',
+    provider: {
+      '@type': 'Organization',
+      '@id': 'https://www.iptv2belgie.be/#organization',
+    },
   };
 
   return (
@@ -178,7 +167,15 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSchema) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationSchema),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(softwareApplicationSchema),
+          }}
         />
       </head>
       <body

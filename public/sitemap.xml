@@ -52,6 +52,17 @@
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
-  
+  <url>
+  <loc>https://www.iptv2belgie.be/blog/installer-iptv-sans-decodeur-belgique</loc>
+  <lastmod>2025-01-20</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.9</priority>
+</url>
+<url>
+  <loc>https://www.iptv2belgie.be/blog/iptv-installeren-zonder-decoder-belgie</loc>
+  <lastmod>2025-01-20</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.9</priority>
+</url>
 
 </urlset>

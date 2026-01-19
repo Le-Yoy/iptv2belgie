@@ -1,4 +1,4 @@
-// src/components/pricing/DynamicPricing.tsx - Fixed Modal Flow
+// src/components/pricing/DynamicPricing.tsx - Fixed Belgian Languages
 'use client';
 
 import { useState } from 'react';
@@ -18,6 +18,7 @@ interface PricingPlan {
   badge: { 'nl-BE': string; 'fr-BE': string; en: string } | null;
   savings: string | null;
   popular: boolean;
+  features: { 'nl-BE': string[]; 'fr-BE': string[]; en: string[] };
 }
 
 const pricingData: Record<string, PricingPlan[]> = {
@@ -32,8 +33,35 @@ const pricingData: Record<string, PricingPlan[]> = {
         'fr-BE': 'MEILLEURE VALEUR',
         en: 'BEST VALUE',
       },
-      savings: '62%',
+      savings: '70%',
       popular: true,
+      features: {
+        'nl-BE': [
+          '⚡ 4K/8K Geen buffering',
+          '👑 VIP Servers',
+          '🎁 GRATIS + VOD',
+        ],
+        'fr-BE': [
+          '⚡ 4K/8K Sans coupures',
+          '👑 Serveurs VIP',
+          '🎁 GRATUIT + VOD',
+        ],
+        en: ['⚡ 4K/8K No buffering', '👑 VIP Servers', '🎁 FREE + VOD'],
+      },
+    },
+    {
+      id: '6month-1d',
+      duration: { 'nl-BE': '6 Maanden', 'fr-BE': '6 Mois', en: '6 Months' },
+      price: 49.9,
+      monthly: 8.32,
+      badge: null,
+      savings: '35%',
+      popular: false,
+      features: {
+        'nl-BE': ['⚡ 4K/8K Geen buffering', '👑 VIP Servers'],
+        'fr-BE': ['⚡ 4K/8K Sans coupures', '👑 Serveurs VIP'],
+        en: ['⚡ 4K/8K No buffering', '👑 VIP Servers'],
+      },
     },
     {
       id: '3month-1d',
@@ -43,22 +71,32 @@ const pricingData: Record<string, PricingPlan[]> = {
       badge: { 'nl-BE': 'POPULAIR', 'fr-BE': 'POPULAIRE', en: 'POPULAR' },
       savings: '22%',
       popular: false,
+      features: {
+        'nl-BE': ['⚡ 4K/8K Geen buffering', '👑 VIP Servers'],
+        'fr-BE': ['⚡ 4K/8K Sans coupures', '👑 Serveurs VIP'],
+        en: ['⚡ 4K/8K No buffering', '👑 VIP Servers'],
+      },
     },
     {
       id: '1month-1d',
       duration: { 'nl-BE': '1 Maand', 'fr-BE': '1 Mois', en: '1 Month' },
-      price: 15,
-      monthly: 15,
+      price: 15.9,
+      monthly: 15.9,
       badge: null,
       savings: null,
       popular: false,
+      features: {
+        'nl-BE': ['⚡ 4K/8K Geen buffering', '👑 VIP Servers'],
+        'fr-BE': ['⚡ 4K/8K Sans coupures', '👑 Serveurs VIP'],
+        en: ['⚡ 4K/8K No buffering', '👑 VIP Servers'],
+      },
     },
   ],
   '2-devices': [
     {
       id: '12month-2d',
       duration: { 'nl-BE': '12 Maanden', 'fr-BE': '12 Mois', en: '12 Months' },
-      price: 118, // (69 * 2) - 20
+      price: 118,
       monthly: 9.83,
       badge: {
         'nl-BE': 'MAXIMALE BESPARING',
@@ -67,11 +105,38 @@ const pricingData: Record<string, PricingPlan[]> = {
       },
       savings: '34%',
       popular: true,
+      features: {
+        'nl-BE': [
+          '⚡ 4K/8K Geen buffering',
+          '👑 VIP Servers',
+          '🎁 GRATIS + VOD',
+        ],
+        'fr-BE': [
+          '⚡ 4K/8K Sans coupures',
+          '👑 Serveurs VIP',
+          '🎁 GRATUIT + VOD',
+        ],
+        en: ['⚡ 4K/8K No buffering', '👑 VIP Servers', '🎁 FREE + VOD'],
+      },
+    },
+    {
+      id: '6month-2d',
+      duration: { 'nl-BE': '6 Maanden', 'fr-BE': '6 Mois', en: '6 Months' },
+      price: 85,
+      monthly: 14.17,
+      badge: null,
+      savings: '25%',
+      popular: false,
+      features: {
+        'nl-BE': ['⚡ 4K/8K Geen buffering', '👑 VIP Servers'],
+        'fr-BE': ['⚡ 4K/8K Sans coupures', '👑 Serveurs VIP'],
+        en: ['⚡ 4K/8K No buffering', '👑 VIP Servers'],
+      },
     },
     {
       id: '3month-2d',
       duration: { 'nl-BE': '3 Maanden', 'fr-BE': '3 Mois', en: '3 Months' },
-      price: 60, // (35 * 2) - 10
+      price: 60,
       monthly: 20,
       badge: {
         'nl-BE': 'MEEST GEKOZEN',
@@ -80,22 +145,32 @@ const pricingData: Record<string, PricingPlan[]> = {
       },
       savings: '20%',
       popular: false,
+      features: {
+        'nl-BE': ['⚡ 4K/8K Geen buffering', '👑 VIP Servers'],
+        'fr-BE': ['⚡ 4K/8K Sans coupures', '👑 Serveurs VIP'],
+        en: ['⚡ 4K/8K No buffering', '👑 VIP Servers'],
+      },
     },
     {
       id: '1month-2d',
       duration: { 'nl-BE': '1 Maand', 'fr-BE': '1 Mois', en: '1 Month' },
-      price: 25, // (15 * 2) - 5
+      price: 25,
       monthly: 25,
       badge: { 'nl-BE': 'GEZIN', 'fr-BE': 'FAMILLE', en: 'FAMILY' },
       savings: '17%',
       popular: false,
+      features: {
+        'nl-BE': ['⚡ 4K/8K Geen buffering', '👑 VIP Servers'],
+        'fr-BE': ['⚡ 4K/8K Sans coupures', '👑 Serveurs VIP'],
+        en: ['⚡ 4K/8K No buffering', '👑 VIP Servers'],
+      },
     },
   ],
   '3-devices': [
     {
       id: '12month-3d',
       duration: { 'nl-BE': '12 Maanden', 'fr-BE': '12 Mois', en: '12 Months' },
-      price: 167, // (69 * 3) - 40
+      price: 167,
       monthly: 13.92,
       badge: {
         'nl-BE': 'MAXIMALE BESPARING',
@@ -104,11 +179,38 @@ const pricingData: Record<string, PricingPlan[]> = {
       },
       savings: '38%',
       popular: true,
+      features: {
+        'nl-BE': [
+          '⚡ 4K/8K Geen buffering',
+          '👑 VIP Servers',
+          '🎁 GRATIS + VOD',
+        ],
+        'fr-BE': [
+          '⚡ 4K/8K Sans coupures',
+          '👑 Serveurs VIP',
+          '🎁 GRATUIT + VOD',
+        ],
+        en: ['⚡ 4K/8K No buffering', '👑 VIP Servers', '🎁 FREE + VOD'],
+      },
+    },
+    {
+      id: '6month-3d',
+      duration: { 'nl-BE': '6 Maanden', 'fr-BE': '6 Mois', en: '6 Months' },
+      price: 120,
+      monthly: 20,
+      badge: null,
+      savings: '28%',
+      popular: false,
+      features: {
+        'nl-BE': ['⚡ 4K/8K Geen buffering', '👑 VIP Servers'],
+        'fr-BE': ['⚡ 4K/8K Sans coupures', '👑 Serveurs VIP'],
+        en: ['⚡ 4K/8K No buffering', '👑 VIP Servers'],
+      },
     },
     {
       id: '3month-3d',
       duration: { 'nl-BE': '3 Maanden', 'fr-BE': '3 Mois', en: '3 Months' },
-      price: 85, // (35 * 3) - 20
+      price: 85,
       monthly: 28.33,
       badge: {
         'nl-BE': 'MEEST GEKOZEN',
@@ -117,22 +219,32 @@ const pricingData: Record<string, PricingPlan[]> = {
       },
       savings: '24%',
       popular: false,
+      features: {
+        'nl-BE': ['⚡ 4K/8K Geen buffering', '👑 VIP Servers'],
+        'fr-BE': ['⚡ 4K/8K Sans coupures', '👑 Serveurs VIP'],
+        en: ['⚡ 4K/8K No buffering', '👑 VIP Servers'],
+      },
     },
     {
       id: '1month-3d',
       duration: { 'nl-BE': '1 Maand', 'fr-BE': '1 Mois', en: '1 Month' },
-      price: 35, // (15 * 3) - 10
+      price: 35,
       monthly: 35,
       badge: null,
       savings: '22%',
       popular: false,
+      features: {
+        'nl-BE': ['⚡ 4K/8K Geen buffering', '👑 VIP Servers'],
+        'fr-BE': ['⚡ 4K/8K Sans coupures', '👑 Serveurs VIP'],
+        en: ['⚡ 4K/8K No buffering', '👑 VIP Servers'],
+      },
     },
   ],
   '4-devices': [
     {
       id: '12month-4d',
       duration: { 'nl-BE': '12 Maanden', 'fr-BE': '12 Mois', en: '12 Months' },
-      price: 206, // (69 * 4) - 70
+      price: 206,
       monthly: 17.17,
       badge: {
         'nl-BE': 'MAXIMALE BESPARING',
@@ -141,11 +253,38 @@ const pricingData: Record<string, PricingPlan[]> = {
       },
       savings: '43%',
       popular: true,
+      features: {
+        'nl-BE': [
+          '⚡ 4K/8K Geen buffering',
+          '👑 VIP Servers',
+          '🎁 GRATIS + VOD',
+        ],
+        'fr-BE': [
+          '⚡ 4K/8K Sans coupures',
+          '👑 Serveurs VIP',
+          '🎁 GRATUIT + VOD',
+        ],
+        en: ['⚡ 4K/8K No buffering', '👑 VIP Servers', '🎁 FREE + VOD'],
+      },
+    },
+    {
+      id: '6month-4d',
+      duration: { 'nl-BE': '6 Maanden', 'fr-BE': '6 Mois', en: '6 Months' },
+      price: 155,
+      monthly: 25.83,
+      badge: null,
+      savings: '30%',
+      popular: false,
+      features: {
+        'nl-BE': ['⚡ 4K/8K Geen buffering', '👑 VIP Servers'],
+        'fr-BE': ['⚡ 4K/8K Sans coupures', '👑 Serveurs VIP'],
+        en: ['⚡ 4K/8K No buffering', '👑 VIP Servers'],
+      },
     },
     {
       id: '3month-4d',
       duration: { 'nl-BE': '3 Maanden', 'fr-BE': '3 Mois', en: '3 Months' },
-      price: 105, // (35 * 4) - 35
+      price: 105,
       monthly: 35,
       badge: {
         'nl-BE': 'MEEST GEKOZEN',
@@ -154,22 +293,32 @@ const pricingData: Record<string, PricingPlan[]> = {
       },
       savings: '30%',
       popular: false,
+      features: {
+        'nl-BE': ['⚡ 4K/8K Geen buffering', '👑 VIP Servers'],
+        'fr-BE': ['⚡ 4K/8K Sans coupures', '👑 Serveurs VIP'],
+        en: ['⚡ 4K/8K No buffering', '👑 VIP Servers'],
+      },
     },
     {
       id: '1month-4d',
       duration: { 'nl-BE': '1 Maand', 'fr-BE': '1 Mois', en: '1 Month' },
-      price: 45, // (15 * 4) - 15
+      price: 45,
       monthly: 45,
       badge: null,
       savings: '25%',
       popular: false,
+      features: {
+        'nl-BE': ['⚡ 4K/8K Geen buffering', '👑 VIP Servers'],
+        'fr-BE': ['⚡ 4K/8K Sans coupures', '👑 Serveurs VIP'],
+        en: ['⚡ 4K/8K No buffering', '👑 VIP Servers'],
+      },
     },
   ],
   '5-devices': [
     {
       id: '12month-5d',
       duration: { 'nl-BE': '12 Maanden', 'fr-BE': '12 Mois', en: '12 Months' },
-      price: 245, // (69 * 5) - 100
+      price: 245,
       monthly: 20.42,
       badge: {
         'nl-BE': 'MAXIMALE BESPARING',
@@ -178,11 +327,38 @@ const pricingData: Record<string, PricingPlan[]> = {
       },
       savings: '47%',
       popular: true,
+      features: {
+        'nl-BE': [
+          '⚡ 4K/8K Geen buffering',
+          '👑 VIP Servers',
+          '🎁 GRATIS + VOD',
+        ],
+        'fr-BE': [
+          '⚡ 4K/8K Sans coupures',
+          '👑 Serveurs VIP',
+          '🎁 GRATUIT + VOD',
+        ],
+        en: ['⚡ 4K/8K No buffering', '👑 VIP Servers', '🎁 FREE + VOD'],
+      },
+    },
+    {
+      id: '6month-5d',
+      duration: { 'nl-BE': '6 Maanden', 'fr-BE': '6 Mois', en: '6 Months' },
+      price: 190,
+      monthly: 31.67,
+      badge: null,
+      savings: '33%',
+      popular: false,
+      features: {
+        'nl-BE': ['⚡ 4K/8K Geen buffering', '👑 VIP Servers'],
+        'fr-BE': ['⚡ 4K/8K Sans coupures', '👑 Serveurs VIP'],
+        en: ['⚡ 4K/8K No buffering', '👑 VIP Servers'],
+      },
     },
     {
       id: '3month-5d',
       duration: { 'nl-BE': '3 Maanden', 'fr-BE': '3 Mois', en: '3 Months' },
-      price: 125, // (35 * 5) - 50
+      price: 125,
       monthly: 41.67,
       badge: {
         'nl-BE': 'MEEST GEKOZEN',
@@ -191,20 +367,30 @@ const pricingData: Record<string, PricingPlan[]> = {
       },
       savings: '33%',
       popular: false,
+      features: {
+        'nl-BE': ['⚡ 4K/8K Geen buffering', '👑 VIP Servers'],
+        'fr-BE': ['⚡ 4K/8K Sans coupures', '👑 Serveurs VIP'],
+        en: ['⚡ 4K/8K No buffering', '👑 VIP Servers'],
+      },
     },
     {
       id: '1month-5d',
       duration: { 'nl-BE': '1 Maand', 'fr-BE': '1 Mois', en: '1 Month' },
-      price: 55, // (15 * 5) - 20
+      price: 55,
       monthly: 55,
       badge: null,
       savings: '27%',
       popular: false,
+      features: {
+        'nl-BE': ['⚡ 4K/8K Geen buffering', '👑 VIP Servers'],
+        'fr-BE': ['⚡ 4K/8K Sans coupures', '👑 Serveurs VIP'],
+        en: ['⚡ 4K/8K No buffering', '👑 VIP Servers'],
+      },
     },
   ],
 };
 
-const features = {
+const globalFeatures = {
   'nl-BE': {
     included: [
       '50,000+ kanalen HD/4K/8K',
@@ -252,20 +438,17 @@ export default function DynamicPricing({
   const [showEmailModal, setShowEmailModal] = useState(false);
 
   const currentPlans = pricingData[deviceType];
-  const currentFeatures = features[language];
+  const currentFeatures = globalFeatures[language];
 
   const handlePlanSelect = (plan: PricingPlan) => {
     setSelectedPlan(plan);
     setShowEmailModal(true);
   };
 
-  // FIXED: Let modal handle its own flow - don't close it prematurely
   const handleEmailCapture = (email: string) => {
     if (onEmailCapture) {
       onEmailCapture(email);
     }
-    // Modal will show success state and handle its own closing
-    // after user contacts support via WhatsApp/Telegram
   };
 
   const getComparisonText = (language: string) => {
@@ -336,7 +519,6 @@ export default function DynamicPricing({
       className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900"
     >
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -352,7 +534,6 @@ export default function DynamicPricing({
           </h2>
           <p className="text-xl text-gray-400 mb-8">{texts.vs}</p>
 
-          {/* Device Toggle - Mobile Optimized */}
           <div className="flex flex-wrap justify-center gap-2 max-w-4xl mx-auto">
             {deviceOptions.map((option) => (
               <button
@@ -370,14 +551,13 @@ export default function DynamicPricing({
           </div>
         </motion.div>
 
-        {/* Pricing Cards */}
         <AnimatePresence mode="wait">
           <motion.div
             key={deviceType}
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8"
           >
             {currentPlans.map((plan, index) => (
               <motion.div
@@ -392,7 +572,6 @@ export default function DynamicPricing({
                     : 'bg-slate-800/50 border-slate-700 hover:border-sky-500/50'
                 }`}
               >
-                {/* Badge */}
                 {plan.badge && (
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                     <span className="bg-gradient-to-r from-sky-500 to-emerald-500 text-white text-xs font-bold px-4 py-2 rounded-full whitespace-nowrap">
@@ -401,7 +580,6 @@ export default function DynamicPricing({
                   </div>
                 )}
 
-                {/* Plan details */}
                 <div className="text-center mb-6">
                   <h3 className="text-2xl font-bold text-white mb-2">
                     {plan.duration[language]}
@@ -415,14 +593,29 @@ export default function DynamicPricing({
                   </div>
                   {plan.savings && (
                     <div className="mt-2">
-                      <span className="text-emerald-400 font-semibold text-lg">
-                        {texts.save} {plan.savings}
+                      <span className="inline-block bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-full text-sm font-semibold">
+                        {language === 'nl-BE'
+                          ? 'Bespaar'
+                          : language === 'fr-BE'
+                            ? 'Économisez'
+                            : 'Save'}{' '}
+                        {plan.savings}
                       </span>
                     </div>
                   )}
                 </div>
 
-                {/* CTA Button */}
+                <div className="space-y-2 mb-6">
+                  {plan.features[language].map((feature, idx) => (
+                    <div
+                      key={idx}
+                      className="text-sm text-gray-300 text-center"
+                    >
+                      {feature}
+                    </div>
+                  ))}
+                </div>
+
                 <button
                   onClick={() => handlePlanSelect(plan)}
                   className={`w-full py-4 rounded-xl font-bold text-lg transition-all duration-300 ${
@@ -442,7 +635,6 @@ export default function DynamicPricing({
           </motion.div>
         </AnimatePresence>
 
-        {/* Features */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -483,7 +675,6 @@ export default function DynamicPricing({
           </div>
         </motion.div>
 
-        {/* Trust badges */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -505,7 +696,6 @@ export default function DynamicPricing({
         </motion.div>
       </div>
 
-      {/* Email Modal */}
       {showEmailModal && selectedPlan && (
         <EmailCaptureModal
           isOpen={showEmailModal}
