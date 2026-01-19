@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import PricingModal from './PricingModal';
 import type { SubscriptionPlan } from '@/lib/types';
 
 const plans: SubscriptionPlan[] = [
@@ -101,24 +100,17 @@ const plans: SubscriptionPlan[] = [
 
 // Reorder plans for mobile: Ultimate first, then others
 const mobileOrderPlans = [
-  plans.find((p) => p.id === '12month')!, // Ultimate first
-  ...plans.filter((p) => p.id !== '12month'), // Rest in original order
+  plans.find((p) => p.id === '12month')!,
+  ...plans.filter((p) => p.id !== '12month'),
 ];
 
 export default function PricingGrid() {
-  const [selectedPlan, setSelectedPlan] = useState<SubscriptionPlan | null>(
-    null
-  );
-  const [showModal, setShowModal] = useState(false);
-
   const handlePlanSelect = (plan: SubscriptionPlan) => {
-    setSelectedPlan(plan);
-    setShowModal(true);
-  };
+    // Direct WhatsApp redirect
+    const message = `Hello IPTV2Belgie! 🎬\n\nI want to order:\n\n📦 Plan: ${plan.duration}\n💰 Price: ${plan.price}\n📱 Devices: ${plan.deviceLimit}\n\nPlease send me payment instructions to complete my order. Thank you!`;
 
-  const closeModal = () => {
-    setShowModal(false);
-    setSelectedPlan(null);
+    const whatsappUrl = `https://wa.me/33773436514?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
   };
 
   return (
@@ -411,15 +403,6 @@ export default function PricingGrid() {
           </div>
         </motion.div>
       </div>
-
-      {/* Pricing Modal */}
-      {showModal && selectedPlan && (
-        <PricingModal
-          plan={selectedPlan}
-          isOpen={showModal}
-          onClose={closeModal}
-        />
-      )}
     </section>
   );
 }
