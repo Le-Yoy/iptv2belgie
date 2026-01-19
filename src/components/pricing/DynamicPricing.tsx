@@ -443,18 +443,16 @@ export default function DynamicPricing({
     const deviceMatch = plan.id.match(/(\d+)d$/);
     const deviceCount = deviceMatch ? deviceMatch[1] : '1';
 
-    // Create WhatsApp message
-    const message = `Hello IPTV2Belgie! 🎬\n\nI want to order:\n\n📦 Plan: ${plan.duration[language]}\n💰 Price: €${plan.price}\n📱 Devices: ${deviceCount}\n\nPlease send me payment instructions. Thank you!`;
+    // Language-specific messages
+    const messages = {
+      'nl-BE': `Hallo IPTV2Belgie! 🎬\n\nIk wil graag bestellen:\n\n📦 Plan: ${plan.duration[language]}\n💰 Prijs: €${plan.price}\n📱 Apparaten: ${deviceCount}\n\nKunt u mij de betalingsinstructies sturen? Dank u!`,
+      'fr-BE': `Bonjour IPTV2Belgie! 🎬\n\nJe souhaite commander:\n\n📦 Plan: ${plan.duration[language]}\n💰 Prix: €${plan.price}\n📱 Appareils: ${deviceCount}\n\nPouvez-vous m'envoyer les instructions de paiement? Merci!`,
+      en: `Hello IPTV2Belgie! 🎬\n\nI want to order:\n\n📦 Plan: ${plan.duration[language]}\n💰 Price: €${plan.price}\n📱 Devices: ${deviceCount}\n\nPlease send me payment instructions. Thank you!`,
+    };
 
     // Direct WhatsApp redirect
-    const whatsappUrl = `https://wa.me/33773436514?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/33773436514?text=${encodeURIComponent(messages[language])}`;
     window.open(whatsappUrl, '_blank');
-  };
-
-  const handleEmailCapture = (email: string) => {
-    if (onEmailCapture) {
-      onEmailCapture(email);
-    }
   };
 
   const getComparisonText = (language: string) => {
