@@ -434,15 +434,21 @@ export default function DynamicPricing({
   onEmailCapture,
 }: PricingProps) {
   const [deviceType, setDeviceType] = useState<string>('1-device');
-  const [selectedPlan, setSelectedPlan] = useState<PricingPlan | null>(null);
-  const [showEmailModal, setShowEmailModal] = useState(false);
 
   const currentPlans = pricingData[deviceType];
   const currentFeatures = globalFeatures[language];
 
   const handlePlanSelect = (plan: PricingPlan) => {
-    setSelectedPlan(plan);
-    setShowEmailModal(true);
+    // Extract device count from plan ID
+    const deviceMatch = plan.id.match(/(\d+)d$/);
+    const deviceCount = deviceMatch ? deviceMatch[1] : '1';
+
+    // Create WhatsApp message
+    const message = `Hello IPTV2Belgie! 🎬\n\nI want to order:\n\n📦 Plan: ${plan.duration[language]}\n💰 Price: €${plan.price}\n📱 Devices: ${deviceCount}\n\nPlease send me payment instructions. Thank you!`;
+
+    // Direct WhatsApp redirect
+    const whatsappUrl = `https://wa.me/33773436514?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
   };
 
   const handleEmailCapture = (email: string) => {
@@ -695,16 +701,6 @@ export default function DynamicPricing({
           </div>
         </motion.div>
       </div>
-
-      {showEmailModal && selectedPlan && (
-        <EmailCaptureModal
-          isOpen={showEmailModal}
-          onClose={() => setShowEmailModal(false)}
-          plan={selectedPlan}
-          language={language}
-          onEmailCapture={handleEmailCapture}
-        />
-      )}
     </section>
   );
 }
