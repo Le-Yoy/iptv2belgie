@@ -245,6 +245,22 @@ export default function Footer({ language, onLanguageChange }: FooterProps) {
                   {texts.quickLinks.devices}
                 </a>
               </li>
+              <li>
+                <a
+                  href="/wereldkampioenschap-2026/"
+                  className="text-slate-400 hover:text-indigo-400 transition-colors text-sm"
+                >
+                  WK 2026 / Coupe du Monde 2026
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/coupe-du-monde-2026/"
+                  className="text-slate-400 hover:text-indigo-400 transition-colors text-sm"
+                >
+                  Calendrier Coupe du Monde 2026
+                </a>
+              </li>
             </ul>
           </motion.div>
 
