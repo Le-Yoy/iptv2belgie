@@ -179,6 +179,32 @@ export default function BlogIndex() {
 
           <div className="grid md:grid-cols-2 gap-4 md:gap-6">
             <Link
+              href="/blog/jupiler-pro-league-kijken"
+              className="group block"
+            >
+              <article className="bg-gradient-to-br from-emerald-900/30 to-sky-900/30 rounded-xl p-4 md:p-6 border border-emerald-500/50 hover:border-emerald-400 transition-all duration-300 h-full">
+                <div className="flex items-start justify-between mb-2 md:mb-3">
+                  <h3 className="text-lg md:text-xl font-semibold text-white group-hover:text-emerald-400 transition-colors">
+                    Jupiler Pro League Kijken 2026-27: Niet €35 aan DAZN
+                  </h3>
+                  <span className="bg-red-600 text-white text-xs px-2 py-1 rounded animate-pulse">
+                    NIEUW
+                  </span>
+                </div>
+                <p className="text-gray-300 mb-3 md:mb-4 text-sm md:text-base">
+                  Alle opties vergeleken (DAZN, Telenet &amp; Play Sports) plus
+                  het goedkoopste alternatief om alle wedstrijden live te kijken.
+                </p>
+                <div className="flex items-center justify-between">
+                  <span className="text-emerald-400 text-sm font-semibold">
+                    Bekijk de gids →
+                  </span>
+                  <span className="text-gray-500 text-xs">10 min leestijd</span>
+                </div>
+              </article>
+            </Link>
+
+            <Link
               href="/blog/installer-iptv-sans-decodeur-belgique"
               className="group block"
             >
