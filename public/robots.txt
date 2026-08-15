@@ -10,7 +10,6 @@ Disallow: /api/
 Disallow: /blog/iptv-belgium-2025-complete-guide
 Disallow: /blog/jupiler-pro-league-kijken-buitenland
 Disallow: /blog/vtm-play-canvas-vrt-buitenland
-Disallow: /blog/proximus-tv-alternatief-2025
 Disallow: /blog/formule-1-streaming-belgie-2025
 
 # Block static files that shouldn't be indexed

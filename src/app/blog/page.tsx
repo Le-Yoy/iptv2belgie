@@ -231,6 +231,32 @@ export default function BlogIndex() {
             </Link>
 
             <Link
+              href="/blog/proximus-tv-alternatief-2025"
+              className="group block"
+            >
+              <article className="bg-gradient-to-br from-purple-900/30 to-sky-900/30 rounded-xl p-4 md:p-6 border border-purple-500/50 hover:border-purple-400 transition-all duration-300 h-full">
+                <div className="flex items-start justify-between mb-2 md:mb-3">
+                  <h3 className="text-lg md:text-xl font-semibold text-white group-hover:text-purple-400 transition-colors">
+                    Proximus Opzeggen &amp; Overstappen naar IPTV
+                  </h3>
+                  <span className="bg-red-600 text-white text-xs px-2 py-1 rounded animate-pulse">
+                    NIEUW
+                  </span>
+                </div>
+                <p className="text-gray-300 mb-3 md:mb-4 text-sm md:text-base">
+                  Pickx te duur (75-90€/maand)? Zo zeg je Proximus op en behoud je
+                  al je zenders en voetbal via IPTV vanaf 9,99€/maand.
+                </p>
+                <div className="flex items-center justify-between">
+                  <span className="text-purple-400 text-sm font-semibold">
+                    Lees de gids →
+                  </span>
+                  <span className="text-gray-500 text-xs">8 min leestijd</span>
+                </div>
+              </article>
+            </Link>
+
+            <Link
               href="/blog/installer-iptv-sans-decodeur-belgique"
               className="group block"
             >
