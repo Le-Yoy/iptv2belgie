@@ -4,9 +4,9 @@ import Link from 'next/link';
 
 export const metadata: Metadata = {
   title:
-    'Jupiler Pro League Kijken 2026-2027: Alle Opties Vergeleken (DAZN, Telenet & Goedkoopste Alternatief) | IPTV2Belgie',
+    'Jupiler Pro League Kijken 2026-27: Alle Wedstrijden vanaf 9,99€ (Niet €35 aan DAZN)',
   description:
-    'Waar kan je de Jupiler Pro League kijken in 2026-2027? Volledige vergelijking van DAZN (24,99€), Telenet Play Sports en het goedkoopste alternatief. Alle wedstrijden live, updated deze week.',
+    '⚽ Kijk álle Jupiler Pro League-wedstrijden live in 4K vanaf 9,99€/maand — goedkoper dan DAZN + Play Sports. Speelschema van dit weekend + alle opties vergeleken. ✅',
   keywords:
     'jupiler pro league kijken, gratis jupiler pro league kijken, jupiler pro league kijken telenet, jupiler pro league streamen, pro league kijken goedkoop, dazn belgië alternatief, jupiler pro league live',
   openGraph: {
