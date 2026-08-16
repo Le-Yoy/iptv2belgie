@@ -4,9 +4,9 @@ import Link from 'next/link';
 
 export const metadata: Metadata = {
   title:
-    'Proximus Opzeggen & Alternatief in 2026: Zo Bespaar Je €800/jaar met IPTV | IPTV2Belgie',
+    'Proximus Opzeggen 2026: Goedkoper Alternatief via IPTV (vanaf 9,99€)',
   description:
-    'Proximus Pickx te duur geworden? Ontdek hoe je Proximus TV opzegt en overstapt naar IPTV. Al je zenders en voetbal (Jupiler Pro League) vanaf 9,99€/maand.',
+    '💸 Proximus Pickx te duur (75-90€)? Zo zeg je op en behoud je al je zenders + voetbal via IPTV vanaf 9,99€/maand. Bespaar tot €800 per jaar, zonder decoder. ✅',
   keywords:
     'proximus opzeggen, proximus tv alternatief, proximus pickx te duur, overstappen van proximus naar iptv, proximus alternatief, proximus pickx opzeggen, alternatief proximus tv',
   openGraph: {

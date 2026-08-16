@@ -4,9 +4,9 @@ import Link from 'next/link';
 
 export const metadata: Metadata = {
   title:
-    'Telenet Opzeggen & Overstappen naar IPTV in 2026: Zo Bespaar Je €900/jaar | IPTV2Belgie',
+    'Telenet Opzeggen in 2026: Overstappen naar IPTV & €900/jaar Besparen',
   description:
-    'Telenet en Play Sports te duur geworden? Ontdek hoe je Telenet opzegt en overstapt naar IPTV. Behoud al je voetbal (Jupiler Pro League, Champions League) vanaf 9,99€/maand.',
+    '💸 Play Sports +15€ duurder? Zo zeg je Telenet op en kijk álle voetbal (Jupiler Pro League + Champions) via IPTV vanaf 9,99€/maand. Bespaar tot €900 per jaar. ✅',
   keywords:
     'telenet opzeggen, play sports opzeggen, telenet voetbal te duur, overstappen van telenet naar iptv, telenet alternatief, play sports te duur, telenet play sports prijs',
   openGraph: {

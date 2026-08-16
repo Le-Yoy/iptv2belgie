@@ -4,9 +4,9 @@ import Link from 'next/link';
 
 export const metadata: Metadata = {
   title:
-    'Beste IPTV België 2026: Top Keuze, Prijzen & Alternatief voor Telenet/Proximus | IPTV2Belgie',
+    'Beste IPTV België 2026 — 20.000+ Zenders & Alle Voetbal vanaf 9,99€',
   description:
-    'Op zoek naar de beste IPTV in België in 2026? Vergelijking van prijzen, zenders en kwaliteit. 20.000+ zenders, alle voetbal (Jupiler Pro League) en films vanaf 9,99€/maand, zonder decoder.',
+    '🏆 De beste IPTV van België in 2026: 20.000+ zenders, alle voetbal (Jupiler Pro League) en 100.000+ films in 4K vanaf 9,99€/maand — goedkoper dan Telenet & Proximus. ✅',
   keywords:
     'beste iptv belgië, iptv belgië, iptv belgium, beste iptv belgium, iptv abonnement belgië, belgian iptv, belçika iptv, iptv belgië kopen, goedkope iptv belgië',
   openGraph: {
