@@ -179,6 +179,32 @@ export default function BlogIndex() {
 
           <div className="grid md:grid-cols-2 gap-4 md:gap-6">
             <Link
+              href="/blog/beste-iptv-belgie-2026"
+              className="group block"
+            >
+              <article className="bg-gradient-to-br from-emerald-900/30 to-purple-900/30 rounded-xl p-4 md:p-6 border border-emerald-500/50 hover:border-emerald-400 transition-all duration-300 h-full">
+                <div className="flex items-start justify-between mb-2 md:mb-3">
+                  <h3 className="text-lg md:text-xl font-semibold text-white group-hover:text-emerald-400 transition-colors">
+                    Beste IPTV België 2026 — Top Keuze &amp; Prijzen
+                  </h3>
+                  <span className="bg-red-600 text-white text-xs px-2 py-1 rounded animate-pulse">
+                    NIEUW
+                  </span>
+                </div>
+                <p className="text-gray-300 mb-3 md:mb-4 text-sm md:text-base">
+                  De beste IPTV van België vergeleken: 20.000+ zenders, alle
+                  voetbal en films vanaf 9,99€/maand, goedkoper dan Telenet/Proximus.
+                </p>
+                <div className="flex items-center justify-between">
+                  <span className="text-emerald-400 text-sm font-semibold">
+                    Bekijk de gids →
+                  </span>
+                  <span className="text-gray-500 text-xs">9 min leestijd</span>
+                </div>
+              </article>
+            </Link>
+
+            <Link
               href="/blog/jupiler-pro-league-kijken"
               className="group block"
             >
