@@ -32,7 +32,7 @@ export default function JupilerProLeagueKijkenBlog() {
         description:
           'Waar en hoe je de Jupiler Pro League live kan kijken in 2026-2027, vergeleken op prijs. DAZN, Telenet Play Sports en het goedkoopste alternatief.',
         datePublished: '2026-08-11T00:00:00+02:00',
-        dateModified: '2026-08-13T00:00:00+02:00',
+        dateModified: '2026-08-20T00:00:00+02:00',
         image: 'https://www.iptv2belgie.be/og-image.jpg',
         author: {
           '@type': 'Organization',
@@ -111,7 +111,7 @@ export default function JupilerProLeagueKijkenBlog() {
       <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center overflow-hidden">
         <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
           <p className="text-sky-400 font-semibold mb-4 uppercase tracking-wide">
-            Seizoen 2026-2027 • Bijgewerkt op 13 augustus 2026
+            Seizoen 2026-2027 • Bijgewerkt op 20 augustus 2026
           </p>
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
             Jupiler Pro League Kijken: Betaal Geen €35/maand aan DAZN
@@ -506,10 +506,11 @@ export default function JupilerProLeagueKijkenBlog() {
           </h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
             <strong className="text-white">
-              Bijgewerkt op 13 augustus 2026 — Speeldag 2 (14-16 augustus).
+              Bijgewerkt op 20 augustus 2026 — Speeldag 3 (22-23 augustus).
             </strong>{' '}
-            Hieronder alle wedstrijden van dit weekend in de Jupiler Pro League.
-            Al deze wedstrijden kijk je live via IPTV2Belgie:
+            Hieronder alle wedstrijden van dit weekend in de Jupiler Pro League,
+            met de Brugse derby als topaffiche. Al deze wedstrijden kijk je live
+            via IPTV2Belgie:
           </p>
           <div className="overflow-x-auto mb-6">
             <table className="w-full bg-gray-800 rounded-lg overflow-hidden">
@@ -523,56 +524,42 @@ export default function JupilerProLeagueKijkenBlog() {
               <tbody className="divide-y divide-gray-700">
                 <tr className="hover:bg-gray-700">
                   <td className="px-4 py-3 text-white">
-                    Cercle Brugge – STVV
+                    Standard – RAAL La Louvière
                   </td>
-                  <td className="px-4 py-3 text-center text-gray-300">VRIJ</td>
+                  <td className="px-4 py-3 text-center text-gray-300">DON</td>
                   <td className="px-4 py-3 text-center text-gray-300">20:45</td>
                 </tr>
                 <tr className="hover:bg-gray-700">
                   <td className="px-4 py-3 text-white">
-                    Union SG – Zulte Waregem
+                    Zulte Waregem – SK Beveren
                   </td>
                   <td className="px-4 py-3 text-center text-gray-300">ZAT</td>
                   <td className="px-4 py-3 text-center text-gray-300">16:00</td>
                 </tr>
                 <tr className="hover:bg-gray-700">
                   <td className="px-4 py-3 text-white">
-                    KV Kortrijk – Royal Antwerp
+                    Charleroi – KV Mechelen
                   </td>
                   <td className="px-4 py-3 text-center text-gray-300">ZAT</td>
                   <td className="px-4 py-3 text-center text-gray-300">18:15</td>
                 </tr>
                 <tr className="hover:bg-gray-700">
                   <td className="px-4 py-3 text-white">
-                    OH Leuven – Club Brugge
+                    Royal Antwerp – KRC Genk
                   </td>
                   <td className="px-4 py-3 text-center text-gray-300">ZAT</td>
                   <td className="px-4 py-3 text-center text-gray-300">20:45</td>
                 </tr>
                 <tr className="hover:bg-gray-700">
                   <td className="px-4 py-3 text-white">
-                    KRC Genk – KVC Westerlo
-                  </td>
-                  <td className="px-4 py-3 text-center text-gray-300">ZAT</td>
-                  <td className="px-4 py-3 text-center text-gray-300">20:45</td>
-                </tr>
-                <tr className="hover:bg-gray-700">
-                  <td className="px-4 py-3 text-white">
-                    SK Beveren – RSC Anderlecht
-                  </td>
-                  <td className="px-4 py-3 text-center text-gray-300">ZON</td>
-                  <td className="px-4 py-3 text-center text-gray-300">13:30</td>
-                </tr>
-                <tr className="hover:bg-gray-700">
-                  <td className="px-4 py-3 text-white">
-                    RAAL La Louvière – KAA Gent
+                    Lommel SK – KVC Westerlo
                   </td>
                   <td className="px-4 py-3 text-center text-gray-300">ZON</td>
                   <td className="px-4 py-3 text-center text-gray-300">16:00</td>
                 </tr>
                 <tr className="hover:bg-gray-700">
-                  <td className="px-4 py-3 text-white">
-                    KV Mechelen – Standard
+                  <td className="px-4 py-3 text-white font-semibold">
+                    Club Brugge – Cercle Brugge <span className="text-emerald-400">(Brugse derby)</span>
                   </td>
                   <td className="px-4 py-3 text-center text-gray-300">ZON</td>
                   <td className="px-4 py-3 text-center text-gray-300">18:30</td>
